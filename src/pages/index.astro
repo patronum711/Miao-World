@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { href } from "../utils/path";
 import BaseLayout from "../components/layout/BaseLayout.astro";
 import PostCard from "../components/blog/PostCard.astro";
 
@@ -31,7 +32,7 @@ const recentPosts = posts
         最近文章
       </h2>
       <a
-        href="/blog"
+        href={href("/blog")}
         class="link-underline text-sm text-text-secondary transition-colors hover:text-accent"
       >
         查看全部 &rarr;

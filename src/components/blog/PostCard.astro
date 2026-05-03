@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { formatDate } from "../../utils/date";
+import { href } from "../../utils/path";
 import TagBadge from "../ui/TagBadge.astro";
 
 interface Props {
@@ -11,7 +12,7 @@ const { title, description, publishedAt, tags } = post.data;
 ---
 
 <article class="group border-b border-border/40 py-8 last:border-b-0">
-  <a href={`/blog/${post.id.replace(/\.mdx?$/, "")}`} class="block">
+  <a href={href(`/blog/${post.id.replace(/\.mdx?$/, "")}`)} class="block">
     <h2
       class="mb-2 text-lg font-semibold text-text-primary transition-colors group-hover:text-accent"
     >

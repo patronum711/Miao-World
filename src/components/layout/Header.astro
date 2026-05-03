@@ -1,5 +1,6 @@
 ---
 import { navigation } from "../../data/navigation";
+import { href } from "../../utils/path";
 
 const currentPath = Astro.url.pathname;
 ---
@@ -7,7 +8,7 @@ const currentPath = Astro.url.pathname;
 <header class="fixed top-0 right-0 left-0 z-50 border-b border-border/60 bg-bg/80 backdrop-blur">
   <nav class="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
     <a
-      href="/"
+      href={href("/")}
       class="text-base font-semibold tracking-tight text-text-primary transition-colors hover:text-accent"
     >
       Miao&rsquo;s World
@@ -23,7 +24,7 @@ const currentPath = Astro.url.pathname;
             return (
               <li>
                 <a
-                  href={item.path}
+                  href={href(item.path)}
                   class={`link-underline rounded px-3 py-1.5 text-sm transition-colors ${
                     isActive
                       ? "text-accent"

@@ -6,7 +6,8 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://miao.dev",
+  site: "https://patronum711.github.io",
+  base: "/miao-world",
   integrations: [mdx(), react()],
   legacy: {
     collectionsBackwardsCompat: true,
