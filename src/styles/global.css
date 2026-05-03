@@ -244,3 +244,101 @@
     display: none;
   }
 }
+
+/* =============================================
+   TOC sidebar
+   ============================================= */
+
+.toc-sidebar {
+  position: fixed;
+  top: 5rem;
+  width: 13rem;
+  max-height: calc(100vh - 7rem);
+  overflow-y: auto;
+  /* position to the right of max-w-3xl content */
+  right: max(1rem, calc((100vw - 48rem) / 2 - 14rem));
+}
+
+.toc-link {
+  transition: color 0.15s ease;
+  border-radius: 3px;
+}
+
+.toc-active {
+  color: var(--color-accent) !important;
+}
+
+/* =============================================
+   Heading anchor links
+   ============================================= */
+
+.prose :where(h2, h3) {
+  scroll-margin-top: 5rem;
+}
+
+.anchor-link {
+  position: absolute;
+  left: -1.25em;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1em;
+  height: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  color: var(--color-accent);
+  text-decoration: none;
+  font-size: 0.85em;
+}
+
+.prose :where(h2, h3) {
+  position: relative;
+}
+
+.prose :where(h2, h3):hover .anchor-link {
+  opacity: 1;
+}
+
+/* =============================================
+   Code copy button
+   ============================================= */
+
+.code-block-wrapper {
+  position: relative;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.75rem;
+  padding: 0 0.5rem;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.code-block-wrapper:hover .copy-btn,
+.copy-btn:focus-visible {
+  opacity: 1;
+}
+
+.copy-btn:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.copy-btn.copied {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}

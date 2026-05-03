@@ -1,0 +1,58 @@
+---
+import { getCollection } from "astro:content";
+import { href } from "../../../utils/path";
+import BaseLayout from "../../../components/layout/BaseLayout.astro";
+import PostCard from "../../../components/blog/PostCard.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const tagSet = new Set<string>();
+  for (const post of posts) {
+    for (const tag of post.data.tags) {
+      tagSet.add(tag);
+    }
+  }
+  return [...tagSet].map((tag) => ({
+    params: { tag },
+    props: { tag },
+  }));
+}
+
+interface Props {
+  tag: string;
+}
+const { tag } = Astro.props;
+
+const posts = await getCollection("blog", ({ data }) =>
+  !data.draft && data.tags.includes(tag),
+);
+const sorted = posts.sort(
+  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
+);
+---
+
+<BaseLayout
+  title={`标签: ${tag}`}
+  description={`包含标签「${tag}」的文章列表`}
+>
+  <h1 class="animate-enter mb-2 mt-12 text-2xl font-semibold tracking-tight">
+    标签: <span class="text-accent">{tag}</span>
+  </h1>
+  <p class="animate-enter mb-10 flex items-center gap-2 text-sm text-text-secondary">
+    共 {sorted.length} 篇文章
+    <span aria-hidden="true">&middot;</span>
+    <a href={href("/blog/tags")} class="link-underline hover:text-accent">
+      查看所有标签
+    </a>
+  </p>
+
+  {
+    sorted.length > 0 ? (
+      <div class="animate-enter stagger-1">
+        {sorted.map((post) => <PostCard post={post} />)}
+      </div>
+    ) : (
+      <p class="animate-enter text-text-secondary">没有找到相关文章。</p>
+    )
+  }
+</BaseLayout>

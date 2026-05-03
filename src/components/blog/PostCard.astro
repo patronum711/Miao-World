@@ -28,7 +28,7 @@ const { title, description, publishedAt, tags } = post.data;
   {
     tags.length > 0 && (
       <div class="flex flex-wrap gap-1.5">
-        {tags.map((tag) => <TagBadge tag={tag} />)}
+        {tags.map((tag) => <TagBadge tag={tag} href={href(`/blog/tags/${tag}`)} />)}
       </div>
     )
   }

@@ -1,15 +1,39 @@
 ---
 import { render, type CollectionEntry } from "astro:content";
+import type { MarkdownHeading } from "astro";
 import { formatDate } from "../../utils/date";
+import { readingTime } from "../../utils/reading-time";
+import { href } from "../../utils/path";
 import TagBadge from "../ui/TagBadge.astro";
+import TableOfContents from "./TableOfContents.astro";
+import PostNav from "./PostNav.astro";
+import BackToTop from "../ui/BackToTop.astro";
 
 interface Props {
   post: CollectionEntry<"blog">;
+  headings: MarkdownHeading[];
+  prev: CollectionEntry<"blog"> | null;
+  next: CollectionEntry<"blog"> | null;
 }
-const { post } = Astro.props;
+
+const { post, headings, prev, next } = Astro.props;
 const { title, description, publishedAt, updatedAt, tags } = post.data;
-let { Content } = await render(post);
+const { Content } = await render(post);
+const readTime = readingTime(post.body ?? "");
 ---
+
+<TableOfContents headings={headings} />
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description,
+  datePublished: publishedAt.toISOString(),
+  ...(updatedAt ? { dateModified: updatedAt.toISOString() } : {}),
+  author: { "@type": "Person", name: "Miao" },
+  url: `${Astro.site}${href(`/blog/${post.id.replace(/\.mdx?$/, "")}`)}`,
+})} />
 
 <article class="animate-enter">
   <header class="mb-10 mt-12 border-b border-border/40 pb-8">
@@ -18,26 +42,79 @@ let { Content } = await render(post);
     >
       {title}
     </h1>
-    <div class="flex flex-wrap items-center gap-3 text-sm text-text-secondary">
+    <div
+      class="flex flex-wrap items-center gap-3 text-sm text-text-secondary"
+    >
       <time datetime={publishedAt.toISOString()}>
-        发布于 {formatDate(publishedAt)}
+        {formatDate(publishedAt)}
       </time>
+      <span aria-hidden="true">&middot;</span>
+      <span>{readTime}</span>
       {updatedAt && (
-        <span>
-          &middot; 更新于 {formatDate(updatedAt)}
-        </span>
+        <>
+          <span aria-hidden="true">&middot;</span>
+          <span>更新于 {formatDate(updatedAt)}</span>
+        </>
       )}
     </div>
     {
       tags.length > 0 && (
         <div class="mt-3 flex flex-wrap gap-1.5">
-          {tags.map((tag) => <TagBadge tag={tag} />)}
+          {tags.map((tag) => <TagBadge tag={tag} href={href(`/blog/tags/${tag}`)} />)}
         </div>
       )
     }
   </header>
 
-  <div class="prose max-w-none">
+  <div class="prose max-w-none" id="post-body">
     <Content />
   </div>
 </article>
+
+<PostNav prev={prev} next={next} />
+<BackToTop />
+
+<!-- Heading anchors -->
+<script>
+  (() => {
+    const headings = document.querySelectorAll<HTMLElement>(
+      ".prose h2[id], .prose h3[id]",
+    );
+    headings.forEach((h) => {
+      const a = document.createElement("a");
+      a.href = `#${h.id}`;
+      a.className = "anchor-link";
+      a.setAttribute("aria-label", `链接到 "${h.textContent}"`);
+      a.textContent = "#";
+      h.appendChild(a);
+    });
+  })();
+</script>
+
+<!-- Code copy -->
+<script>
+  (() => {
+    const pres = document.querySelectorAll(".prose pre");
+    pres.forEach((pre) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "code-block-wrapper";
+      pre.parentNode?.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+
+      const btn = document.createElement("button");
+      btn.className = "copy-btn";
+      btn.textContent = "复制";
+      btn.addEventListener("click", async () => {
+        const code = pre.querySelector("code")?.textContent ?? "";
+        await navigator.clipboard.writeText(code);
+        btn.textContent = "已复制";
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.textContent = "复制";
+          btn.classList.remove("copied");
+        }, 2000);
+      });
+      wrapper.appendChild(btn);
+    });
+  })();
+</script>

@@ -2,6 +2,8 @@
 
 个人综合性网站。首期实现博客板块，预留项目展示、简历、旅行等板块扩展接口。
 
+在线地址: **https://patronum711.github.io/miao-world/**
+
 ## 技术栈
 
 | 层 | 选型 | 版本 |
@@ -9,6 +11,7 @@
 | 框架 | Astro (SSG) | ^6.2 |
 | 样式 | Tailwind CSS + `@tailwindcss/typography` | ^4.1 |
 | 内容 | Astro Content Collections (legacy compat) | — |
+| 搜索 | Pagefind | ^1.5 |
 | 部署 | GitHub Pages (GitHub Actions) | — |
 | 包管理 | pnpm | ^10 |
 
@@ -16,165 +19,335 @@
 
 ```
 miao-world/
-├── astro.config.mjs            # Astro 配置 (集成、legacy flag、site URL)
-├── tsconfig.json               # TypeScript 配置 (extends astro/tsconfigs/strict)
-├── package.json                # 依赖与脚本
-├── public/                     # 静态资源 (favicon 等)
+├── astro.config.mjs            # site + base + sitemap + legacy flag + tailwindcss
+├── tsconfig.json               # extends astro/tsconfigs/strict
+├── package.json                # 依赖与脚本 (build = astro build + pagefind)
+├── public/
 ├── src/
-│   ├── content.config.ts       # Content Collections 集合定义
-│   ├── content/                # 内容目录 (每板块一个子目录)
-│   │   └── blog/               # 博客文章 (.md / .mdx)
+│   ├── content.config.ts       # Content Collections 集合 schema
+│   ├── content/blog/           # 博客文章 .md/.mdx
 │   ├── components/
 │   │   ├── layout/
-│   │   │   ├── BaseLayout.astro # 全局布局壳 (<html> + <head> + slot)
-│   │   │   ├── Header.astro     # 顶部导航栏 (固定顶部, 数据驱动)
-│   │   │   └── Footer.astro     # 页脚
+│   │   │   ├── BaseLayout.astro # <html>壳 + 防闪烁脚本 + SEO + slot
+│   │   │   ├── Header.astro     # 导航 + 主题切换 + 搜索图标
+│   │   │   └── Footer.astro
 │   │   ├── blog/
-│   │   │   ├── PostCard.astro   # 博客列表卡片
-│   │   │   └── PostContent.astro # 文章详情容器 (render + prose)
+│   │   │   ├── PostCard.astro        # 列表卡片 (标题/日期/标签)
+│   │   │   ├── PostContent.astro     # 详情容器 (meta/TOC/正文/JSON-LD)
+│   │   │   ├── PostNav.astro         # 上一篇/下一篇
+│   │   │   └── TableOfContents.astro # 右侧悬浮大纲
 │   │   └── ui/
-│   │       ├── SEO.astro        # SEO meta / OG 标签
-│   │       └── TagBadge.astro   # 标签徽章
+│   │       ├── SEO.astro        # meta / OG 标签
+│   │       ├── TagBadge.astro   # 标签徽章 (可选 href)
+│   │       └── BackToTop.astro  # 回到顶部
 │   ├── pages/
-│   │   ├── index.astro          # 主页 "/" (Hero + 最新文章)
+│   │   ├── index.astro          # "/" 主页
+│   │   ├── search.astro         # "/search" 全站搜索
+│   │   ├── rss.xml.ts           # RSS feed
 │   │   └── blog/
-│   │       ├── index.astro      # 博客列表 "/blog"
-│   │       └── [...slug].astro  # 文章详情 "/blog/:slug"
-│   ├── data/
-│   │   └── navigation.ts       # 导航配置 (数据驱动，加板块在此追加)
-│   ├── styles/
-│   │   └── global.css           # Tailwind CSS 4 入口 + 主题变量 + prose 定制
+│   │       ├── index.astro      # "/blog" 列表页 (第1页)
+│   │       ├── [...slug].astro  # "/blog/:slug" 文章详情
+│   │       ├── tags/
+│   │       │   ├── index.astro  # "/blog/tags" 标签云
+│   │       │   └── [tag].astro  # "/blog/tags/:tag" 标签筛选
+│   │       └── page/
+│   │           └── [page].astro # "/blog/page/2" 分页
+│   ├── data/navigation.ts       # 导航配置 (数据驱动)
+│   ├── styles/global.css        # Tailwind 4 + 亮/暗主题 + 所有组件样式
 │   └── utils/
-│       └── date.ts              # 日期格式化 (zh-CN)
-└── .github/workflows/
-    └── deploy.yml               # push main → 构建 → 部署到 GitHub Pages
+│       ├── date.ts              # formatDate (zh-CN)
+│       ├── path.ts              # href() 函数 — 所有 <a> 链接必须使用
+│       └── reading-time.ts      # 中英文混合阅读时长
+└── .github/workflows/deploy.yml # push main → 构建 + Pagefind → 部署
 ```
 
 ## 架构约定
 
-### 导航系统 (数据驱动)
-
-导航项定义在 `src/data/navigation.ts`。Header 组件遍历此数组渲染，自动高亮当前路由。
+### 导航 (数据驱动)
 
 ```ts
+// src/data/navigation.ts
 export const navigation = [
   { label: "首页", path: "/" },
   { label: "博客", path: "/blog" },
-  // 加板块 = 在此追加一行 + 创建对应 page 文件
 ];
+// 加板块 = 追加一行 + 创建对应 page 文件
 ```
 
-### 内容集合 (Content Collections)
+Header 组件遍历渲染 + 自动高亮当前路由。搜索作为图标独立放在导航右侧，不走 navigation 数组。
 
-- 集合定义在 `src/content.config.ts`，使用 `defineCollection` + `zod` schema
-- 文章内容放在 `src/content/<collection-name>/` 下
+### 路径系统
+
+```ts
+// src/utils/path.ts
+import { href } from "../../utils/path";
+href("/blog")  // → "/miao-world/blog" (自动根据 base 前缀)
+```
+
+**所有页面 `<a href>` 必须通过 `href()` 包装。** CSS/JS/图片等资源路径由 Astro + Vite 自动处理 base 前缀，`<a>` 标签不会。
+
+### 内容集合
+
+- `src/content.config.ts` 使用 `defineCollection` + `zod` schema
 - 列表页用 `getCollection("blog")` 查询，支持 `filter` 过滤
-- 详情页用 `import { render } from "astro:content"` 渲染 Markdown 正文
-- **注意**: 已启用 `legacy.collectionsBackwardsCompat`，支持 `render()` 函数
+- 详情页用 `import { render } from "astro:content"` 渲染 Markdown
+- **注意**: 启用 `legacy.collectionsBackwardsCompat`（见下方陷阱章节）
 
-### 样式系统
+### 主题切换
 
-- **引擎**: Tailwind CSS 4 (CSS-first 配置, 无 `tailwind.config.*` 文件)
-- **入口**: `src/styles/global.css` — 通过 `@import "tailwindcss"` 和 `@plugin` 加载
-- **主题变量**: 用 `@theme` 块定义项目色板 (`--color-bg`, `--color-accent` 等)
-- **文章排版**: 通过 `@tailwindcss/typography` 的 prose 类 + CSS 自定义属性覆盖
-- **暗色主题**: 默认暗色背景 (`oklch` 色彩空间)，青色强调色
-- **动画**: 纯 CSS `@keyframes fade-up` + `animation-delay` 实现入场效果
+- 默认跟随系统 `prefers-color-scheme`
+- 导航栏按钮循环: 系统 → 暗色 → 亮色
+- 持久化到 `localStorage("theme")`
+- `<head>` 内联脚本防闪烁 (渲染前读取 localStorage)
+- CSS: `@media (prefers-color-scheme: dark)` + `[data-theme]` 属性选择器，`not([data-theme="light"])` 防止手动选择被系统覆盖
 
-### 路径别名
+### 搜索 (Pagefind)
 
-当前未配置路径别名。组件导入使用相对路径 (如 `../../utils/date`)。如需添加别名，在 `tsconfig.json` 和 `astro.config.mjs` 中配置。
-
-## 扩展指南
-
-### 添加新板块 (以「项目展示」为例)
-
-**Step 1** — 在 `navigation.ts` 追加导航项：
-```ts
-{ label: "项目", path: "/projects" },
-```
-
-**Step 2** — 在 `content.config.ts` 定义集合 (可选，如果板块有内容)：
-```ts
-const projects = defineCollection({
-  schema: z.object({
-    name: z.string(),
-    description: z.string(),
-    url: z.string().optional(),
-    techStack: z.array(z.string()),
-  }),
-});
-// 加到 collections export 里
-```
-
-**Step 3** — 创建内容目录 `src/content/projects/` 和相应的 `.md` 文件
-
-**Step 4** — 创建页面 `src/pages/projects/index.astro`
-
-**Step 5** — Header 自动渲染新增的导航标签
-
-### 写新文章
-
-在 `src/content/blog/` 下创建 `.md` 文件，文件名建议格式 `YYYY-MM-DD-slug.md`：
-
-```md
----
-title: "文章标题"
-description: "列表摘要 & SEO description"
-publishedAt: 2026-05-10
-updatedAt: 2026-05-15    # 可选
-tags: ["技术", "前端"]
-draft: false             # true 则构建时跳过
-cover: "/og-image.png"   # 可选，OG 分享图
----
-
-正文 (Markdown / MDX)...
-```
-
-push 到 main 分支后 GitHub Actions 自动部署。
-
-### 添加交互组件
-
-项目已预装 React 19 + `@astrojs/react`。需要客户端交互时：
-
-```astro
----
-// .astro 文件中
-import Counter from "../components/Counter";
----
-<Counter client:load />  <!-- 或 client:idle, client:visible -->
-```
-
-纯展示组件用 `.astro` 文件。需要 state/effect 时再用 React。
+- `pnpm build` 后 Pagefind 自动扫描 `dist/` 建索引
+- **只在生产构建后可用**，`pnpm dev` 不行
+- 搜索页面通过 fetch + Blob URL 加载 Pagefind 模块（原因见陷阱章节）
+- Pagefind 必须用 `createInstance({ basePath })` 指定索引位置
+- 全站覆盖，未来新板块自动纳入
 
 ## 设计系统
 
-| 色板角色 | 值 | 用途 |
+### 亮色 (默认)
+
+| 变量 | 值 | 用途 |
 |---|---|---|
-| `--color-bg` | `oklch(0.145 0.008 260)` | 页面背景 (深蓝黑) |
-| `--color-surface` | `oklch(0.18 0.01 260)` | 卡片背景 |
-| `--color-text-primary` | `oklch(0.92 0.004 260)` | 主文字 |
-| `--color-text-secondary` | `oklch(0.6 0.015 260)` | 次要文字 |
-| `--color-accent` | `oklch(0.75 0.12 195)` | 强调色 (青) |
-| `--color-border` | `oklch(0.22 0.015 260)` | 分割线 |
+| `--color-bg` | `oklch(0.98 0.003 95)` | 暖白背景 |
+| `--color-text-primary` | `oklch(0.16 0.005 260)` | 主文字 |
+| `--color-text-secondary` | `oklch(0.46 0.01 260)` | 次要文字 |
+| `--color-accent` | `oklch(0.48 0.14 195)` | 深青强调 |
+| `--color-border` | `oklch(0.88 0.006 95)` | 分割线 |
+
+### 暗色
+
+| 变量 | 值 | 用途 |
+|---|---|---|
+| `--color-bg` | `oklch(0.22 0.01 260)` | 柔和深灰蓝 (非死黑) |
+| `--color-text-primary` | `oklch(0.90 0.004 260)` | 主文字 |
+| `--color-text-secondary` | `oklch(0.58 0.015 260)` | 次要文字 |
+| `--color-accent` | `oklch(0.68 0.13 195)` | 亮青强调 |
+| `--color-border` | `oklch(0.28 0.015 260)` | 分割线 |
+
+## 扩展指南
+
+### 添加板块
+
+1. `navigation.ts` 追加 `{ label: "新板块", path: "/new" }`
+2. `content.config.ts` 定义集合 (可选)
+3. 创建 `src/pages/new/index.astro`，链接用 `href()`
+4. 如有内容，创建 `src/content/new/` 目录
+
+### 写新文章
+
+在 `src/content/blog/` 下创建 `YYYY-MM-DD-slug.md`：
+
+```md
+---
+title: "标题"
+description: "摘要"
+publishedAt: 2026-05-10
+updatedAt: 2026-05-15    # 可选
+tags: ["技术", "前端"]
+draft: false             # true 则构建跳过
+cover: "/og-image.png"   # 可选
+---
+
+正文
+```
+
+### 添加交互组件
+
+项目已预装 React 19。纯展示用 `.astro`，需要 state/effect 时用 React:
+
+```astro
+<Counter client:load />  <!-- 或 client:idle / client:visible -->
+```
 
 ## 命令
 
 | 命令 | 用途 |
 |---|---|
-| `pnpm dev` | 启动开发服务器 (localhost:4321) |
-| `pnpm build` | 构建到 `dist/` |
-| `pnpm preview` | 本地预览构建结果 |
+| `pnpm dev` | 开发 (热更新, 不含搜索) |
+| `pnpm build` | 构建 + Pagefind 建索引 |
+| `pnpm preview` | 预览生产构建 (含搜索) |
 
 ## 部署
 
-- **触发**: push 到 `main` 分支
-- **流程**: GitHub Actions 执行 `pnpm install && pnpm build`，产物部署到 GitHub Pages
-- **配置**: 仓库 Settings → Pages → Source = GitHub Actions
-- **域名**: 生产 URL 在 `astro.config.mjs` 的 `site` 字段配置
+- 仓库 `miao-world` → `base: "/miao-world"` in `astro.config.mjs`
+- push `main` → GitHub Actions 自动部署
+- Settings → Pages → Source = GitHub Actions
 
-## 注意事项
+---
 
-1. 本项目使用 pnpm，CI 中 `pnpm/action-setup` 指定了 v10
-2. Astro 6 Content Layer 是新的默认 API，当前通过 `legacy.collectionsBackwardsCompat` 保持旧 API 兼容。迁移到新 API 时，需将 `defineCollection` 添加 `loader`，并将 `post.render()` 改为 `import { render } from "astro:content"; render(post)`
-3. 文章 `[...slug].astro` 中 ID 包含 `.md` 扩展名，已做 strip 处理；换用新 API 后需重新验证
+## 给后续 Agent 的踩坑指南
+
+以下记录了本项目实现过程中遇到的实质性技术陷阱和解决路径。**修改相关代码前务必阅读**，避免重蹈覆辙。
+
+### 1. Astro 6 Content Collections: legacy compat 是必需的
+
+**问题**: Astro 6 默认使用 Content Layer API，旧式 `defineCollection` (不含 `loader`) 无法工作，集合为空。
+
+**解决**: `astro.config.mjs` 必须设置 `legacy: { collectionsBackwardsCompat: true }`。这让:
+- 无需手动配置 `loader`，自动以 glob loader 包装
+- `entry.render()` 恢复为 `astro:content` 的 `render()` 函数
+- 入口的 `.slug` 和 `.render()` API 可用
+
+**注意**: 此模式下 `post.id` 包含文件扩展名 (如 `2026-05-03-hello-world.md`)。构建 URL 时必须 strip `.md`/`.mdx`:
+```ts
+post.id.replace(/\.mdx?$/, "")
+```
+
+### 2. Astro 6 的 base 路径: 链接不自动前缀
+
+**问题**: 设置 `base: "/miao-world"` 后，CSS/JS/图片的 `<link>` 和 `<script>` 标签会自动加前缀，但 `<a href>` **不会**。直接写 `/blog` 会 404。
+
+**解决**: 所有页面链接必须通过 `src/utils/path.ts` 的 `href()` 函数:
+```ts
+export function href(path: string): string {
+  return `${import.meta.env.BASE_URL.replace(/\/$/, "")}${path}`;
+}
+```
+
+**双重前缀陷阱**: Pagefind 搜索结果返回的 `item.url` 已包含 `/miao-world/` 前缀(因为扫描的是 dist/ 中的 HTML)。对它再用 `href()` 会导致 `/miao-world/miao-world/...`。
+→ 对 Pagefind 结果直接清理后缀 (`.html`, `/index.html`) 即可，不准用 `href()`。
+
+### 3. Pagefind: 三大连续陷阱
+
+#### 3a. `pnpm dev` 不可用
+
+`pagefind --site dist` 只在 `pnpm build` 时运行。`pnpm dev` 从 src/ 提供服务，没有 Pagefind 索引文件。
+
+→ 开发样式/页面用 `pnpm dev`，测试搜索必须 `pnpm build && pnpm preview`。
+
+#### 3b. Vite 的 `P()` 预加载包装会破坏 `import().createInstance()`
+
+**问题**: Vite 在编译时检测到 `import()` 中的模块路径，自动包装为 `P(() => import(...), __VITE_PRELOAD__)` (预加载辅助函数)。如果直接写:
+```js
+const pf = await import(`${baseUrl}/pagefind/pagefind.js`);
+pagefind = pf.createInstance({ basePath: "..." });
+```
+
+Vite 编译后变成:
+```js
+m = await P(() => import(...), __VITE_PRELOAD__).createInstance(...)
+```
+
+`.createInstance()` 被错误地调用在 Promise 上 (`P()` 的返回值)，而非模块上。
+
+**解决**: 用 fetch + Blob URL 彻底绕过 Vite 的静态分析:
+```js
+const pfUrl = baseUrl + "/pagefind/pagefind.js";
+const text = await fetch(pfUrl).then(r => r.text());
+const blob = new Blob([text], { type: "text/javascript" });
+const blobUrl = URL.createObjectURL(blob);
+const pf = await import(blobUrl);
+URL.revokeObjectURL(blobUrl);
+pagefind = pf.createInstance({ basePath: baseUrl + "/pagefind/" });
+```
+
+`import(blobUrl)` 的 URL 在运行时生成，Vite 无法静态分析，不会注入 `P()`。
+
+#### 3c. Pagefind 必须用 `createInstance({ basePath })`
+
+Pagefind 默认从 `/pagefind/` 加载索引和 WASM 文件。在子路径部署时，实际路径是 `/miao-world/pagefind/`。使用模块级别的 `pf.init()` 会走默认路径导致 404。
+
+**解决**: 必须创建自定义实例并显式传入 basePath:
+```js
+pagefind = pf.createInstance({ basePath: "/miao-world/pagefind/" });
+await pagefind.init();  // 现在会从正确路径加载
+```
+
+### 4. Tailwind CSS 4: 插件语法和 prose 变量完整性
+
+#### 4a. 插件用 `@plugin` 不是 `@import`
+
+Tailwind CSS 4 中加载第三方插件 (如 typography) 使用:
+```css
+@plugin "@tailwindcss/typography";
+```
+`@import` 会导致模块解析错误。
+
+#### 4b. prose 变量必须完整覆盖
+
+在亮/暗双模式下，只设几个 `--tw-prose-*` 变量是不够的。**缺失的变量会 fallback 到 Tailwind 默认值**，导致暗色背景下文字融入背景(如 `--tw-prose-bold` 默认是 `oklch(0.21)`——暗色底上几乎看不见)。
+
+→ 显式设置全部 17 个 prose 变量: body, headings, links, bold, code, lead, bullets, counters, quotes, quote-borders, hr, pre-bg, pre-border, pre-code, captions, th-borders, td-borders。
+
+### 5. 标签 URL: 不要手动 encodeURIComponent
+
+在 `getStaticPaths` 的 `params` 中使用 `encodeURIComponent(tag)` 会导致路由匹配失败。Astro 会自动处理 URL 编码。
+
+```ts
+// 错误
+params: { tag: encodeURIComponent(tag) }
+// 正确
+params: { tag }  // Astro 自动编码 URL
+```
+
+链接中的 tag 也用原始值，浏览器自动处理编码。
+
+### 6. 分页: Astro `paginate()` 与 legacy content 不兼容
+
+在 `index.astro` 中使用 `getStaticPaths` + `paginate()` 会因内容条目序列化问题导致 `Cannot read properties of undefined (reading 'data')`。需要改用手动分页:
+
+- `/blog` → `index.astro` (无 getStaticPaths，取前 N 篇)
+- `/blog/page/2` → `page/[page].astro` (有 getStaticPaths，按页码切片)
+
+两个文件共享相似的模板逻辑（可抽出公共组件优化）。
+
+### 7. 暗色模式: `data-theme` 与 `prefers-color-scheme` 的交互
+
+手动切换和系统检测同时存在时，需要防止双向覆盖:
+
+```css
+/* 系统暗色 → 应用，除非用户强制亮色 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { ... }
+}
+/* 用户强制暗色 → 始终应用 */
+:root[data-theme="dark"] { ... }
+```
+
+`not([data-theme="light"])` 是关键——用户选择亮色时，系统暗色规则不生效。
+
+### 8. 导航链接的 "活跃" 状态判断
+
+使用 `Astro.url.pathname` 匹配导航路径时，子路径需要 `startsWith`。但要特别注意根路径 "/":
+```ts
+const isActive = item.path === "/"
+  ? currentPath === "/"
+  : currentPath.startsWith(item.path);
+```
+
+如果 "/" 也用了 `startsWith`，所有页面都会高亮首页。
+
+### 9. 页面入场动画无 JS 依赖
+
+`fade-up` 动画 + `stagger-N` 延迟全部用纯 CSS 实现，无 JS 开销:
+```css
+.animate-enter { animation: fade-up 0.5s ease both; }
+.stagger-1 { animation-delay: 0.08s; }
+```
+
+### 10. 配色使用 oklch 色彩空间
+
+整个项目颜色统一使用 `oklch(L C H)` 格式而非 `#hex` 或 `rgb()`，因为:
+- 亮度(L)和色相(H)直观解耦，调整暗色模式只需改 L
+- 在不同显示器上感知一致性好
+- 修改配色只需调整 `global.css` 中的 `@theme` 和暗色 `:root` 覆盖块，组件零改动
+
+### 快速对照表
+
+| 问题 | 症状 | 解决 |
+|---|---|---|
+| Content 集合为空 | 构建警告 "collection does not exist" | `legacy.collectionsBackwardsCompat: true` |
+| 页面链接 404 | 子路径部署链接断裂 | 所有 `<a href>` 用 `href()` |
+| Pagefind 搜索不可用 | dev 模式无索引 | `pnpm build && pnpm preview` |
+| Pagefind 搜索结果 404 | 点击结果链接 404 | 不对 Pagefind URL 用 `href()` |
+| Vite 编译破坏 import | `.createInstance is not a function` | fetch + Blob URL |
+| Pagefind 索引加载失败 | 搜索 "加载失败" | `createInstance({ basePath })` |
+| 暗色加粗文字看不清 | 阅读体验差 | 补全全部 17 个 `--tw-prose-*` |
+| 标签路由匹配失败 | 404 NoMatchingStaticPathFound | params 中不用 `encodeURIComponent` |

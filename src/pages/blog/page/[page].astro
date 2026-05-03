@@ -1,0 +1,90 @@
+---
+import { getCollection } from "astro:content";
+import { href } from "../../../utils/path";
+import BaseLayout from "../../../components/layout/BaseLayout.astro";
+import PostCard from "../../../components/blog/PostCard.astro";
+
+export async function getStaticPaths() {
+  const PAGE_SIZE = 5;
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const sorted = posts.sort(
+    (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
+  );
+  const totalPages = Math.ceil(sorted.length / PAGE_SIZE);
+  // Generate pages 2..totalPages (page 1 is handled by index.astro)
+  return Array.from({ length: totalPages - 1 }, (_, i) => {
+    const page = i + 2;
+    const start = (page - 1) * PAGE_SIZE;
+    return {
+      params: { page: String(page) },
+      props: {
+        posts: sorted.slice(start, start + PAGE_SIZE),
+        currentPage: page,
+        totalPages,
+      },
+    };
+  });
+}
+
+interface Props {
+  posts: Awaited<ReturnType<typeof getCollection<"blog">>>;
+  currentPage: number;
+  totalPages: number;
+}
+const { posts, currentPage, totalPages } = Astro.props;
+---
+
+<BaseLayout
+  title={`博客 — 第 ${currentPage} 页`}
+  description="技术分享、随笔记录、学习笔记。"
+>
+  <div class="animate-enter mb-8 mt-12 flex items-end justify-between">
+    <h1 class="text-2xl font-semibold tracking-tight">
+      博客 <span class="text-base font-normal text-text-secondary">第 {currentPage} 页</span>
+    </h1>
+    <a
+      href={href("/blog/tags")}
+      class="link-underline text-sm text-text-secondary transition-colors hover:text-accent"
+    >
+      标签
+    </a>
+  </div>
+
+  <div class="stagger-1 animate-enter">
+    {posts.map((post) => <PostCard post={post} />)}
+  </div>
+
+  <nav class="mt-10 flex items-center justify-between border-t border-border/40 pt-8">
+    <div>
+      {currentPage > 2 ? (
+        <a
+          href={href(`/blog/page/${currentPage - 1}`)}
+          class="text-sm text-text-secondary transition-colors hover:text-accent"
+        >
+          &larr; 上一页
+        </a>
+      ) : (
+        <a
+          href={href("/blog")}
+          class="text-sm text-text-secondary transition-colors hover:text-accent"
+        >
+          &larr; 上一页
+        </a>
+      )
+      }
+    </div>
+    <span class="text-xs text-text-secondary">
+      {currentPage} / {totalPages}
+    </span>
+    <div>
+      {currentPage < totalPages && (
+        <a
+          href={href(`/blog/page/${currentPage + 1}`)}
+          class="text-sm text-text-secondary transition-colors hover:text-accent"
+        >
+          下一页 &rarr;
+        </a>
+      )}
+    </div>
+  </nav>
+</BaseLayout>

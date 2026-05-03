@@ -1,0 +1,72 @@
+---
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+const { headings } = Astro.props;
+
+const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+if (items.length === 0) return;
+---
+
+<aside
+  class="toc-sidebar hidden xl:block"
+  id="toc-sidebar"
+  aria-label="文章大纲"
+>
+  <h4 class="mb-3 text-xs font-medium uppercase tracking-wider text-text-secondary">
+    目录
+  </h4>
+  <nav>
+    <ul class="space-y-0">
+      {
+        items.map((h) => (
+          <li>
+            <a
+              href={`#${h.slug}`}
+              data-toc-depth={h.depth}
+              class="toc-link block py-1 text-sm leading-normal text-text-secondary transition-colors hover:text-accent"
+              style={`padding-left: ${(h.depth - 2) * 0.75}rem`}
+            >
+              {h.text}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</aside>
+
+<script>
+  (() => {
+    const links = document.querySelectorAll<HTMLAnchorElement>(".toc-link");
+    if (links.length === 0) return;
+
+    const headings = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        ".prose h2[id], .prose h3[id]",
+      ),
+    );
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let activeId: string | null = null;
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            activeId = entry.target.id;
+            break;
+          }
+        }
+        if (!activeId) return;
+        links.forEach((link) => {
+          const slug = link.getAttribute("href")?.slice(1);
+          link.classList.toggle("toc-active", slug === activeId);
+        });
+      },
+      { rootMargin: "-80px 0px -70% 0px", threshold: 0 },
+    );
+
+    headings.forEach((h) => observer.observe(h));
+  })();
+</script>

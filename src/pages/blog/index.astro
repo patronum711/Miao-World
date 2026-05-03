@@ -1,31 +1,56 @@
 ---
 import { getCollection } from "astro:content";
+import { href } from "../../utils/path";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
 import PostCard from "../../components/blog/PostCard.astro";
 
+const PAGE_SIZE = 5;
 const posts = await getCollection("blog", ({ data }) => !data.draft);
 const sorted = posts.sort(
   (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
 );
+const totalPages = Math.ceil(sorted.length / PAGE_SIZE);
+const pagePosts = sorted.slice(0, PAGE_SIZE);
 ---
 
 <BaseLayout
   title="博客"
   description="技术分享、随笔记录、学习笔记。"
 >
-  <h1
-    class="animate-enter mb-8 mt-12 text-2xl font-semibold tracking-tight"
-  >
-    博客
-  </h1>
+  <div class="animate-enter mb-8 mt-12 flex items-end justify-between">
+    <h1 class="text-2xl font-semibold tracking-tight">博客</h1>
+    <a
+      href={href("/blog/tags")}
+      class="link-underline text-sm text-text-secondary transition-colors hover:text-accent"
+    >
+      标签
+    </a>
+  </div>
 
   {
-    sorted.length > 0 ? (
-      <div class="animate-enter stagger-1">
-        {sorted.map((post) => <PostCard post={post} />)}
+    pagePosts.length > 0 ? (
+      <div class="stagger-1 animate-enter">
+        {pagePosts.map((post) => <PostCard post={post} />)}
       </div>
     ) : (
       <p class="animate-enter text-text-secondary">还没有文章。</p>
+    )
+  }
+
+  {
+    totalPages > 1 && (
+      <nav class="mt-10 flex items-center justify-between border-t border-border/40 pt-8">
+        <span />
+        <span class="text-xs text-text-secondary">
+          1 / {totalPages}
+        </span>
+        <a
+          href={href("/blog/page/2")}
+          class="text-sm text-text-secondary transition-colors hover:text-accent"
+        >
+          下一页 &rarr;
+        </a>
+      </nav>
     )
   }
 </BaseLayout>
