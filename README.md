@@ -1,6 +1,6 @@
 # Miao's World
 
-个人综合性网站。首期实现博客板块，预留项目展示、简历、旅行等板块扩展接口。
+个人综合性网站。包含博客、项目展示、关于页、全站搜索，预留旅行等板块扩展接口。
 
 在线地址: **https://patronum711.github.io/miao-world/**
 
@@ -24,39 +24,47 @@ miao-world/
 ├── package.json                # 依赖与脚本 (build = astro build + pagefind)
 ├── public/
 ├── src/
-│   ├── content.config.ts       # Content Collections 集合 schema
-│   ├── content/blog/           # 博客文章 .md/.mdx
+│   ├── content.config.ts       # Content Collections 集合 schema (blog + projects)
+│   ├── content/
+│   │   ├── blog/               # 博客文章 .md/.mdx
+│   │   └── projects/           # 项目展示 .md
 │   ├── components/
 │   │   ├── layout/
-│   │   │   ├── BaseLayout.astro # <html>壳 + 防闪烁脚本 + SEO + slot
+│   │   │   ├── BaseLayout.astro # <html>壳 + 防闪烁 + 滚动渐显脚本 + SEO + slot
 │   │   │   ├── Header.astro     # 导航 + 主题切换 + 搜索图标
 │   │   │   └── Footer.astro
 │   │   ├── blog/
-│   │   │   ├── PostCard.astro        # 列表卡片 (标题/日期/标签)
+│   │   │   ├── PostCard.astro        # 列表卡片
 │   │   │   ├── PostContent.astro     # 详情容器 (meta/TOC/正文/JSON-LD)
 │   │   │   ├── PostNav.astro         # 上一篇/下一篇
-│   │   │   └── TableOfContents.astro # 右侧悬浮大纲
+│   │   │   ├── TableOfContents.astro # 右侧悬浮大纲
+│   │   │   └── TagBar.astro          # 标签快捷筛选条
+│   │   ├── project/
+│   │   │   └── ProjectCard.astro     # 项目卡片 (封面/技术栈/链接)
 │   │   └── ui/
 │   │       ├── SEO.astro        # meta / OG 标签
 │   │       ├── TagBadge.astro   # 标签徽章 (可选 href)
-│   │       └── BackToTop.astro  # 回到顶部
+│   │       └── BackToTop.astro  # 回到顶部 (左侧内容区边缘)
 │   ├── pages/
-│   │   ├── index.astro          # "/" 主页
-│   │   ├── search.astro         # "/search" 全站搜索
+│   │   ├── index.astro          # "/" 主页 (打字动画 + 数据条 + 文章列表)
+│   │   ├── about.astro          # "/about" 关于页 (卡片式)
+│   │   ├── search.astro         # "/search" 全站搜索 (Pagefind)
 │   │   ├── rss.xml.ts           # RSS feed
-│   │   └── blog/
-│   │       ├── index.astro      # "/blog" 列表页 (第1页)
-│   │       ├── [...slug].astro  # "/blog/:slug" 文章详情
-│   │       ├── tags/
-│   │       │   ├── index.astro  # "/blog/tags" 标签云
-│   │       │   └── [tag].astro  # "/blog/tags/:tag" 标签筛选
-│   │       └── page/
-│   │           └── [page].astro # "/blog/page/2" 分页
-│   ├── data/navigation.ts       # 导航配置 (数据驱动)
-│   ├── styles/global.css        # Tailwind 4 + 亮/暗主题 + 所有组件样式
+│   │   ├── blog/
+│   │   │   ├── index.astro      # "/blog" 列表 (第1页 + TagBar)
+│   │   │   ├── [...slug].astro  # "/blog/:slug" 文章详情
+│   │   │   ├── tags/
+│   │   │   │   ├── index.astro  # "/blog/tags" 标签云
+│   │   │   │   └── [tag].astro  # "/blog/tags/:tag" 标签筛选
+│   │   │   └── page/
+│   │   │       └── [page].astro # "/blog/page/2" 分页
+│   │   └── projects/
+│   │       └── index.astro      # "/projects" 项目展示 (双列网格)
+│   ├── data/navigation.ts       # 导航配置: 首页/博客/项目/关于
+│   ├── styles/global.css        # Tailwind 4 + 亮/暗主题 + 噪声纹理 + 所有组件样式
 │   └── utils/
 │       ├── date.ts              # formatDate (zh-CN)
-│       ├── path.ts              # href() 函数 — 所有 <a> 链接必须使用
+│       ├── path.ts              # href() — 所有 <a> 链接必须使用
 │       └── reading-time.ts      # 中英文混合阅读时长
 └── .github/workflows/deploy.yml # push main → 构建 + Pagefind → 部署
 ```
@@ -338,6 +346,24 @@ const isActive = item.path === "/"
 - 亮度(L)和色相(H)直观解耦，调整暗色模式只需改 L
 - 在不同显示器上感知一致性好
 - 修改配色只需调整 `global.css` 中的 `@theme` 和暗色 `:root` 覆盖块，组件零改动
+
+### 11. 滚动渐显动画 (IntersectionObserver)
+
+页面用 `reveal` 类 + IntersectionObserver 实现滚动触发渐显。脚本在 `BaseLayout.astro` 末尾。
+
+**注意**: 页面加载时立即可见的元素（如文章详情正文）**不要加 `reveal` 类**，否则会有短暂的 opacity:0 闪烁。只给首屏以下或列表类内容加。
+
+### 12. 背景噪声纹理在亮/暗模式下的差异
+
+SVG `feTurbulence` 噪声在白底上几乎不可见。解决方案:
+- 亮色模式: `mix-blend-mode: multiply` + 较高 opacity (0.18)
+- 暗色模式: `mix-blend-mode: normal` + 低 opacity (0.04)
+
+`mix-blend-mode` 是让噪声在亮底上生效的关键。
+
+### 13. 打字动画
+
+主页打字轮播是纯 vanilla JS，无框架依赖。修改短语只需编辑 `index.astro` 中的 `phrases` 数组。前缀文字在 HTML 中硬编码。
 
 ### 快速对照表
 

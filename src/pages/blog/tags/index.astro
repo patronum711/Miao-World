@@ -19,19 +19,19 @@ const tags = [...tagMap.entries()]
   title="标签"
   description="按标签浏览文章"
 >
-  <h1 class="animate-enter mb-2 mt-12 text-2xl font-semibold tracking-tight">
+  <h1 class="reveal mb-2 mt-12 text-2xl font-semibold tracking-tight">
     标签
   </h1>
-  <p class="animate-enter mb-10 text-sm text-text-secondary">
+  <p class="reveal mb-10 text-sm text-text-secondary">
     共 {tags.length} 个标签，{posts.length} 篇文章
   </p>
 
-  <div class="animate-enter stagger-1 flex flex-wrap gap-3">
+  <div class="reveal flex flex-wrap gap-3">
     {
       tags.map(([tag, count]) => (
         <a
           href={href(`/blog/tags/${tag}`)}
-          class="inline-flex items-center gap-2 rounded-lg border border-border/60 px-4 py-2.5 text-sm transition-all hover:border-accent/40 hover:text-accent"
+          class="card-hover inline-flex items-center gap-2 rounded-lg border border-border/60 px-4 py-2.5 text-sm hover:text-accent"
         >
           <span>{tag}</span>
           <span class="rounded-full bg-bg-warm px-1.5 py-0.5 text-xs tabular-nums text-text-secondary">

@@ -35,10 +35,10 @@ const sorted = posts.sort(
   title={`标签: ${tag}`}
   description={`包含标签「${tag}」的文章列表`}
 >
-  <h1 class="animate-enter mb-2 mt-12 text-2xl font-semibold tracking-tight">
+  <h1 class="reveal mb-2 mt-12 text-2xl font-semibold tracking-tight">
     标签: <span class="text-accent">{tag}</span>
   </h1>
-  <p class="animate-enter mb-10 flex items-center gap-2 text-sm text-text-secondary">
+  <p class="reveal mb-10 flex items-center gap-2 text-sm text-text-secondary">
     共 {sorted.length} 篇文章
     <span aria-hidden="true">&middot;</span>
     <a href={href("/blog/tags")} class="link-underline hover:text-accent">
@@ -48,11 +48,11 @@ const sorted = posts.sort(
 
   {
     sorted.length > 0 ? (
-      <div class="animate-enter stagger-1">
+      <div class="reveal stagger-1">
         {sorted.map((post) => <PostCard post={post} />)}
       </div>
     ) : (
-      <p class="animate-enter text-text-secondary">没有找到相关文章。</p>
+      <p class="reveal text-text-secondary">没有找到相关文章。</p>
     )
   }
 </BaseLayout>

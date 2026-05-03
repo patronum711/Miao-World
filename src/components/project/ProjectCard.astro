@@ -8,7 +8,7 @@ const { project } = Astro.props;
 const { title, description, techStack, github, demo, cover } = project.data;
 ---
 
-<article class="group rounded-xl border border-border/60 p-5 transition-all hover:border-accent/30">
+<article class="card-hover group rounded-xl border border-border/60 p-5">
   <!-- Cover image placeholder -->
   {cover ? (
     <img
