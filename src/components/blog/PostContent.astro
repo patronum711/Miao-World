@@ -1,0 +1,43 @@
+---
+import { render, type CollectionEntry } from "astro:content";
+import { formatDate } from "../../utils/date";
+import TagBadge from "../ui/TagBadge.astro";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+const { post } = Astro.props;
+const { title, description, publishedAt, updatedAt, tags } = post.data;
+let { Content } = await render(post);
+---
+
+<article class="animate-enter">
+  <header class="mb-10 mt-12 border-b border-border/40 pb-8">
+    <h1
+      class="mb-4 text-2xl font-semibold leading-tight tracking-tight text-text-primary"
+    >
+      {title}
+    </h1>
+    <div class="flex flex-wrap items-center gap-3 text-sm text-text-secondary">
+      <time datetime={publishedAt.toISOString()}>
+        发布于 {formatDate(publishedAt)}
+      </time>
+      {updatedAt && (
+        <span>
+          &middot; 更新于 {formatDate(updatedAt)}
+        </span>
+      )}
+    </div>
+    {
+      tags.length > 0 && (
+        <div class="mt-3 flex flex-wrap gap-1.5">
+          {tags.map((tag) => <TagBadge tag={tag} />)}
+        </div>
+      )
+    }
+  </header>
+
+  <div class="prose max-w-none">
+    <Content />
+  </div>
+</article>

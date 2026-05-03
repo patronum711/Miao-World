@@ -1,0 +1,246 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-bg: oklch(0.98 0.003 95);
+  --color-surface: oklch(0.99 0.001 95);
+  --color-text-primary: oklch(0.16 0.005 260);
+  --color-text-secondary: oklch(0.46 0.01 260);
+  --color-accent: oklch(0.48 0.14 195);
+  --color-accent-hover: oklch(0.4 0.11 195);
+  --color-border: oklch(0.88 0.006 95);
+  --color-bg-warm: oklch(0.96 0.005 90);
+}
+
+/* --- Light prose (default) --- */
+.prose {
+  --tw-prose-body: oklch(0.26 0.008 260);
+  --tw-prose-headings: oklch(0.13 0.005 260);
+  --tw-prose-links: oklch(0.48 0.14 195);
+  --tw-prose-bold: oklch(0.13 0.005 260);
+  --tw-prose-code: oklch(0.28 0.01 260);
+  --tw-prose-lead: oklch(0.37 0.01 260);
+  --tw-prose-bullets: oklch(0.55 0.012 260);
+  --tw-prose-counters: oklch(0.55 0.012 260);
+  --tw-prose-quotes: oklch(0.26 0.008 260);
+  --tw-prose-quote-borders: oklch(0.48 0.14 195);
+  --tw-prose-hr: oklch(0.88 0.006 95);
+  --tw-prose-pre-bg: oklch(0.97 0.003 260);
+  --tw-prose-pre-border: oklch(0.88 0.008 260);
+  --tw-prose-pre-code: oklch(0.26 0.008 260);
+  --tw-prose-captions: oklch(0.46 0.01 260);
+  --tw-prose-th-borders: oklch(0.78 0.008 260);
+  --tw-prose-td-borders: oklch(0.88 0.006 95);
+}
+
+.prose :where(code):not(:where(pre code)) {
+  font-size: 0.875em;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  background: oklch(0.96 0.004 260);
+  border: 1px solid oklch(0.88 0.008 260);
+  font-weight: 400;
+}
+
+.prose :where(pre) {
+  border: 1px solid oklch(0.88 0.008 260);
+  border-radius: 8px;
+  font-size: 0.875em;
+  background: oklch(0.97 0.003 260);
+}
+
+.prose :where(blockquote) {
+  font-style: normal;
+  quotes: none;
+}
+
+/* =============================================
+   Dark mode
+   ============================================= */
+
+/* System prefers dark → apply unless user forced light */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: oklch(0.22 0.01 260);
+    --color-surface: oklch(0.25 0.012 260);
+    --color-text-primary: oklch(0.9 0.004 260);
+    --color-text-secondary: oklch(0.58 0.015 260);
+    --color-accent: oklch(0.68 0.13 195);
+    --color-accent-hover: oklch(0.75 0.1 195);
+    --color-border: oklch(0.28 0.015 260);
+    --color-bg-warm: oklch(0.24 0.012 280);
+  }
+
+  :root:not([data-theme="light"]) .prose {
+    --tw-prose-body: oklch(0.85 0.005 260);
+    --tw-prose-headings: oklch(0.94 0.003 260);
+    --tw-prose-links: oklch(0.72 0.12 195);
+    --tw-prose-bold: oklch(0.94 0.003 260);
+    --tw-prose-code: oklch(0.8 0.007 260);
+    --tw-prose-lead: oklch(0.72 0.008 260);
+    --tw-prose-bullets: oklch(0.5 0.015 260);
+    --tw-prose-counters: oklch(0.5 0.015 260);
+    --tw-prose-quotes: oklch(0.85 0.005 260);
+    --tw-prose-quote-borders: oklch(0.72 0.12 195);
+    --tw-prose-hr: oklch(0.28 0.015 260);
+    --tw-prose-pre-bg: oklch(0.2 0.012 260);
+    --tw-prose-pre-border: oklch(0.28 0.015 260);
+    --tw-prose-pre-code: oklch(0.85 0.005 260);
+    --tw-prose-captions: oklch(0.55 0.015 260);
+    --tw-prose-th-borders: oklch(0.35 0.015 260);
+    --tw-prose-td-borders: oklch(0.28 0.015 260);
+  }
+
+  :root:not([data-theme="light"]) .prose :where(code):not(:where(pre code)) {
+    background: oklch(0.25 0.012 260);
+    border-color: oklch(0.28 0.015 260);
+  }
+
+  :root:not([data-theme="light"]) .prose :where(pre) {
+    background: oklch(0.2 0.012 260);
+    border-color: oklch(0.28 0.015 260);
+  }
+}
+
+/* User forced dark → always apply */
+:root[data-theme="dark"] {
+  --color-bg: oklch(0.22 0.01 260);
+  --color-surface: oklch(0.25 0.012 260);
+  --color-text-primary: oklch(0.9 0.004 260);
+  --color-text-secondary: oklch(0.58 0.015 260);
+  --color-accent: oklch(0.68 0.13 195);
+  --color-accent-hover: oklch(0.75 0.1 195);
+  --color-border: oklch(0.28 0.015 260);
+  --color-bg-warm: oklch(0.24 0.012 280);
+}
+:root[data-theme="dark"] .prose {
+  --tw-prose-body: oklch(0.85 0.005 260);
+  --tw-prose-headings: oklch(0.94 0.003 260);
+  --tw-prose-links: oklch(0.72 0.12 195);
+  --tw-prose-bold: oklch(0.94 0.003 260);
+  --tw-prose-code: oklch(0.8 0.007 260);
+  --tw-prose-lead: oklch(0.72 0.008 260);
+  --tw-prose-bullets: oklch(0.5 0.015 260);
+  --tw-prose-counters: oklch(0.5 0.015 260);
+  --tw-prose-quotes: oklch(0.85 0.005 260);
+  --tw-prose-quote-borders: oklch(0.72 0.12 195);
+  --tw-prose-hr: oklch(0.28 0.015 260);
+  --tw-prose-pre-bg: oklch(0.2 0.012 260);
+  --tw-prose-pre-border: oklch(0.28 0.015 260);
+  --tw-prose-pre-code: oklch(0.85 0.005 260);
+  --tw-prose-captions: oklch(0.55 0.015 260);
+  --tw-prose-th-borders: oklch(0.35 0.015 260);
+  --tw-prose-td-borders: oklch(0.28 0.015 260);
+}
+:root[data-theme="dark"] .prose :where(code):not(:where(pre code)) {
+  background: oklch(0.25 0.012 260);
+  border-color: oklch(0.28 0.015 260);
+}
+:root[data-theme="dark"] .prose :where(pre) {
+  background: oklch(0.2 0.012 260);
+  border-color: oklch(0.28 0.015 260);
+}
+
+/* --- Page load reveal animation --- */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-enter {
+  animation: fade-up 0.5s ease both;
+}
+
+.stagger-1 { animation-delay: 0.08s; }
+.stagger-2 { animation-delay: 0.16s; }
+.stagger-3 { animation-delay: 0.24s; }
+.stagger-4 { animation-delay: 0.32s; }
+
+/* --- Link underline animation --- */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: currentColor;
+  transition: width 0.25s ease;
+}
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* --- Theme toggle button --- */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  transition: color 0.15s ease;
+}
+.theme-toggle:hover {
+  color: var(--color-accent);
+}
+.theme-toggle svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+/* Show/hide icons based on theme */
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon,
+.theme-toggle .icon-system {
+  display: none;
+}
+
+/* System mode (no data-theme or data-theme="system"): show system icon */
+:root:not([data-theme]) .theme-toggle .icon-system,
+:root[data-theme="system"] .theme-toggle .icon-system {
+  display: block;
+}
+/* Light mode: show sun */
+:root[data-theme="light"] .theme-toggle .icon-moon {
+  display: block;
+}
+/* Dark mode: show moon */
+:root[data-theme="dark"] .theme-toggle .icon-sun {
+  display: block;
+}
+/* When system-prefers-dark and no manual override, show moon */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .theme-toggle .icon-sun,
+  :root[data-theme="system"] .theme-toggle .icon-sun {
+    display: block;
+  }
+  :root:not([data-theme]) .theme-toggle .icon-system,
+  :root[data-theme="system"] .theme-toggle .icon-system {
+    display: none;
+  }
+}
+/* When system-prefers-light and no manual override, show sun */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .theme-toggle .icon-moon,
+  :root[data-theme="system"] .theme-toggle .icon-moon {
+    display: block;
+  }
+  :root:not([data-theme]) .theme-toggle .icon-system,
+  :root[data-theme="system"] .theme-toggle .icon-system {
+    display: none;
+  }
+}

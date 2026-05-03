@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import PostCard from "../../components/blog/PostCard.astro";
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+const sorted = posts.sort(
+  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
+);
+---
+
+<BaseLayout
+  title="博客"
+  description="技术分享、随笔记录、学习笔记。"
+>
+  <h1
+    class="animate-enter mb-8 mt-12 text-2xl font-semibold tracking-tight"
+  >
+    博客
+  </h1>
+
+  {
+    sorted.length > 0 ? (
+      <div class="animate-enter stagger-1">
+        {sorted.map((post) => <PostCard post={post} />)}
+      </div>
+    ) : (
+      <p class="animate-enter text-text-secondary">还没有文章。</p>
+    )
+  }
+</BaseLayout>

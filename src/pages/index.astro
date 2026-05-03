@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../components/layout/BaseLayout.astro";
+import PostCard from "../components/blog/PostCard.astro";
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+const recentPosts = posts
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+  .slice(0, 5);
+---
+
+<BaseLayout
+  title="首页"
+  description="Miao 的个人网站 — 计算机学生，热爱技术与探索。"
+>
+  <!-- Hero -->
+  <section class="animate-enter mt-20 mb-20">
+    <h1 class="mb-4 text-3xl font-semibold tracking-tight">
+      你好，我是
+      <span class="text-accent">Miao</span>
+    </h1>
+    <p class="max-w-lg text-lg leading-relaxed text-text-secondary">
+      计算机专业学生，喜欢写代码、探索技术，也喜欢旅行和记录。这里是我的数字小窝。
+    </p>
+  </section>
+
+  <!-- Recent Posts -->
+  <section class="stagger-1 animate-enter">
+    <div class="mb-8 flex items-center justify-between">
+      <h2 class="text-sm font-medium uppercase tracking-wider text-text-secondary">
+        最近文章
+      </h2>
+      <a
+        href="/blog"
+        class="link-underline text-sm text-text-secondary transition-colors hover:text-accent"
+      >
+        查看全部 &rarr;
+      </a>
+    </div>
+
+    {
+      recentPosts.length > 0 ? (
+        <div>
+          {recentPosts.map((post) => <PostCard post={post} />)}
+        </div>
+      ) : (
+        <p class="text-sm text-text-secondary">还没有文章，敬请期待。</p>
+      )
+    }
+  </section>
+</BaseLayout>

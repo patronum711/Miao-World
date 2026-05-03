@@ -1,0 +1,41 @@
+---
+import "../../styles/global.css";
+import SEO from "../ui/SEO.astro";
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+}
+const { title, description, ogImage } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      (() => {
+        const t = localStorage.getItem("theme") || "system";
+        if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+      })();
+    </script>
+    <SEO title={title} description={description} ogImage={ogImage} />
+  </head>
+  <body class="bg-bg text-text-primary antialiased">
+    <Header />
+    <main class="mx-auto max-w-3xl px-6 pb-20">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  html {
+    scrollbar-gutter: stable;
+  }
+</style>
