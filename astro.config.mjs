@@ -10,6 +10,11 @@ export default defineConfig({
   site: "https://patronum711.github.io",
   base: "/miao-world",
   integrations: [mdx(), react(), sitemap()],
+  markdown: {
+    shikiConfig: {
+      theme: "css-variables",
+    },
+  },
   legacy: {
     collectionsBackwardsCompat: true,
   },

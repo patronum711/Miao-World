@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import { href } from "../../../utils/path";
 import BaseLayout from "../../../components/layout/BaseLayout.astro";
 import PostCard from "../../../components/blog/PostCard.astro";
+import TagBar from "../../../components/blog/TagBar.astro";
 
 export async function getStaticPaths() {
   const PAGE_SIZE = 5;
@@ -42,12 +43,10 @@ const { posts, currentPage, totalPages } = Astro.props;
     <h1 class="text-2xl font-semibold tracking-tight">
       博客 <span class="text-base font-normal text-text-secondary">第 {currentPage} 页</span>
     </h1>
-    <a
-      href={href("/blog/tags")}
-      class="link-underline text-sm text-text-secondary transition-colors hover:text-accent"
-    >
-      标签
-    </a>
+  </div>
+
+  <div class="mb-8">
+    <TagBar />
   </div>
 
   <div class="stagger-1 animate-enter">

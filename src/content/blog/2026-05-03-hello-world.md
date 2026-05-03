@@ -25,6 +25,19 @@ tags: ["随笔", "建站"]
 - **Tailwind CSS**：实用优先的 CSS 框架
 - **Markdown**：内容以 Markdown 编写，版本管理友好
 
+示例代码：
+
+```ts
+export function greeting(name: string): string {
+  // 拼接问候语
+  const message = `你好，${name}！`;
+  return message;
+}
+
+const words = greeting("世界");
+console.log(words); // "你好，世界！"
+```
+
 ### 接下来的计划
 
 博客只是第一步，后续会陆续加上项目展示、旅行记录等板块。敬请期待。

@@ -55,6 +55,63 @@
 }
 
 /* =============================================
+   Code highlighting (Shiki css-variables)
+   ============================================= */
+
+:root {
+  --astro-code-color-text: oklch(0.24 0.01 260);
+  --astro-code-color-background: oklch(0.97 0.002 260);
+  --astro-code-token-comment: oklch(0.55 0.01 260);
+  --astro-code-token-keyword: oklch(0.48 0.15 280);
+  --astro-code-token-string: oklch(0.48 0.14 160);
+  --astro-code-token-function: oklch(0.48 0.14 195);
+  --astro-code-token-constant: oklch(0.5 0.14 50);
+  --astro-code-token-parameter: oklch(0.4 0.04 50);
+  --astro-code-token-punctuation: oklch(0.4 0.01 260);
+  --astro-code-token-string-expression: oklch(0.48 0.14 160);
+  --astro-code-token-link: oklch(0.48 0.14 195);
+}
+
+.prose :where(pre) {
+  background: var(--astro-code-color-background);
+}
+
+/* Override prose pre background to use Shiki's */
+.prose :where(pre) > code {
+  font-size: 0.875em;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --astro-code-color-text: oklch(0.88 0.004 260);
+    --astro-code-color-background: oklch(0.19 0.012 260);
+    --astro-code-token-comment: oklch(0.52 0.015 260);
+    --astro-code-token-keyword: oklch(0.72 0.12 280);
+    --astro-code-token-string: oklch(0.68 0.12 160);
+    --astro-code-token-function: oklch(0.68 0.13 195);
+    --astro-code-token-constant: oklch(0.72 0.12 60);
+    --astro-code-token-parameter: oklch(0.75 0.04 60);
+    --astro-code-token-punctuation: oklch(0.6 0.01 260);
+    --astro-code-token-string-expression: oklch(0.68 0.12 160);
+    --astro-code-token-link: oklch(0.68 0.13 195);
+  }
+}
+
+:root[data-theme="dark"] {
+  --astro-code-color-text: oklch(0.88 0.004 260);
+  --astro-code-color-background: oklch(0.19 0.012 260);
+  --astro-code-token-comment: oklch(0.52 0.015 260);
+  --astro-code-token-keyword: oklch(0.72 0.12 280);
+  --astro-code-token-string: oklch(0.68 0.12 160);
+  --astro-code-token-function: oklch(0.68 0.13 195);
+  --astro-code-token-constant: oklch(0.72 0.12 60);
+  --astro-code-token-parameter: oklch(0.75 0.04 60);
+  --astro-code-token-punctuation: oklch(0.6 0.01 260);
+  --astro-code-token-string-expression: oklch(0.68 0.12 160);
+  --astro-code-token-link: oklch(0.68 0.13 195);
+}
+
+/* =============================================
    Dark mode
    ============================================= */
 

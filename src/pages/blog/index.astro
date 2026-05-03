@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import { href } from "../../utils/path";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
 import PostCard from "../../components/blog/PostCard.astro";
+import TagBar from "../../components/blog/TagBar.astro";
 
 const PAGE_SIZE = 5;
 const posts = await getCollection("blog", ({ data }) => !data.draft);
@@ -19,12 +20,10 @@ const pagePosts = sorted.slice(0, PAGE_SIZE);
 >
   <div class="animate-enter mb-8 mt-12 flex items-end justify-between">
     <h1 class="text-2xl font-semibold tracking-tight">博客</h1>
-    <a
-      href={href("/blog/tags")}
-      class="link-underline text-sm text-text-secondary transition-colors hover:text-accent"
-    >
-      标签
-    </a>
+  </div>
+
+  <div class="mb-8">
+    <TagBar />
   </div>
 
   {

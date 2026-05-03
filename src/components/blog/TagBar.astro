@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content";
+import { href } from "../../utils/path";
+
+const MAX_TAGS = 6;
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+const tagMap = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.data.tags) {
+    tagMap.set(tag, (tagMap.get(tag) ?? 0) + 1);
+  }
+}
+const tags = [...tagMap.entries()]
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  .slice(0, MAX_TAGS);
+
+if (tags.length === 0) return;
+---
+
+<div class="flex flex-wrap items-center gap-2">
+  {
+    tags.map(([tag, count]) => (
+      <a
+        href={href(`/blog/tags/${tag}`)}
+        class="inline-flex items-center gap-1.5 rounded-full border border-border/60 px-3 py-1 text-xs text-text-secondary transition-all hover:border-accent/40 hover:text-accent"
+      >
+        {tag}
+        <span class="tabular-nums text-text-secondary/60">{count}</span>
+      </a>
+    ))
+  }
+  <a
+    href={href("/blog/tags")}
+    class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs text-text-secondary/70 transition-colors hover:text-accent"
+  >
+    查看全部标签
+    <span aria-hidden="true">&rarr;</span>
+  </a>
+</div>
