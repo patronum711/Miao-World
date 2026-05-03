@@ -1,0 +1,30 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import ProjectCard from "../../components/project/ProjectCard.astro";
+
+const projects = await getCollection("projects", ({ data }) => !data.draft);
+const sorted = projects.sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="项目"
+  description="Miao 的项目作品集。"
+>
+  <h1 class="animate-enter mb-2 mt-12 text-2xl font-semibold tracking-tight">
+    项目
+  </h1>
+  <p class="animate-enter mb-10 text-sm text-text-secondary">
+    一些自己动手做的小项目。
+  </p>
+
+  {
+    sorted.length > 0 ? (
+      <div class="animate-enter stagger-1 grid gap-5 sm:grid-cols-2">
+        {sorted.map((p) => <ProjectCard project={p} />)}
+      </div>
+    ) : (
+      <p class="animate-enter text-text-secondary">还没有项目，敬请期待。</p>
+    )
+  }
+</BaseLayout>

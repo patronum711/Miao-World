@@ -12,8 +12,19 @@ const blog = defineCollection({
   }),
 });
 
-// Future collections:
-// const projects = defineCollection({ ... });
-// const travels = defineCollection({ ... });
+const projects = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    techStack: z.array(z.string()).default([]),
+    github: z.string().optional(),
+    demo: z.string().optional(),
+    cover: z.string().optional(),
+    order: z.number().default(0),
+    draft: z.boolean().default(false),
+  }),
+});
 
-export const collections = { blog };
+// Future: const travels = defineCollection({ ... });
+
+export const collections = { blog, projects };

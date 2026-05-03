@@ -5,9 +5,23 @@ import BaseLayout from "../components/layout/BaseLayout.astro";
 import PostCard from "../components/blog/PostCard.astro";
 
 const posts = await getCollection("blog", ({ data }) => !data.draft);
-const recentPosts = posts
-  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
-  .slice(0, 5);
+const sorted = posts.sort(
+  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
+);
+const recentPosts = sorted.slice(0, 5);
+
+/* Stats */
+const tagSet = new Set<string>();
+for (const post of posts) {
+  for (const tag of post.data.tags) tagSet.add(tag);
+}
+const stats = [
+  { label: "文章", value: posts.length },
+  { label: "标签", value: tagSet.size },
+  { label: "始于", value: "2026" },
+];
+
+const roles = ["计算机专业学生", "前端爱好者", "旅行记录者"];
 ---
 
 <BaseLayout
@@ -15,18 +29,57 @@ const recentPosts = posts
   description="Miao 的个人网站 — 计算机学生，热爱技术与探索。"
 >
   <!-- Hero -->
-  <section class="animate-enter mt-20 mb-20">
-    <h1 class="mb-4 text-3xl font-semibold tracking-tight">
-      你好，我是
-      <span class="text-accent">Miao</span>
+  <section class="animate-enter mt-20 mb-16">
+    <h1 class="mb-5 text-3xl font-semibold tracking-tight">
+      欢迎来到
+      <span class="text-accent">Miao</span> 的数字小窝！
     </h1>
-    <p class="max-w-lg text-lg leading-relaxed text-text-secondary">
-      计算机专业学生，喜欢写代码、探索技术，也喜欢旅行和记录。这里是我的数字小窝。
+
+    <!-- Typing animation -->
+    <p class="mb-5 text-lg leading-relaxed text-text-secondary" aria-live="polite">
+      我是一个<span id="typing-text">计算机专业学生</span><span id="typing-cursor" class="typing-cursor" aria-hidden="true"></span>
     </p>
+
+    <!-- Social icons -->
+    <div class="mt-5 flex items-center gap-4">
+      <a
+        href="https://github.com/patronum711"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-text-secondary transition-colors hover:text-accent"
+        aria-label="GitHub"
+        title="GitHub"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z" />
+        </svg>
+      </a>
+      <span aria-hidden="true" class="text-text-secondary/30">&middot;</span>
+      <a
+        href={href("/about")}
+        class="text-sm text-text-secondary transition-colors hover:text-accent"
+      >
+        了解更多 &rarr;
+      </a>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stagger-1 animate-enter mb-16 flex gap-8 border-y border-border/40 py-6">
+    {
+      stats.map((s) => (
+        <div>
+          <span class="text-lg font-semibold tabular-nums text-text-primary">
+            {s.value}
+          </span>
+          <span class="ml-1.5 text-sm text-text-secondary">{s.label}</span>
+        </div>
+      ))
+    }
   </section>
 
   <!-- Recent Posts -->
-  <section class="stagger-1 animate-enter">
+  <section class="stagger-2 animate-enter">
     <div class="mb-8 flex items-center justify-between">
       <h2 class="text-sm font-medium uppercase tracking-wider text-text-secondary">
         最近文章
@@ -50,3 +103,56 @@ const recentPosts = posts
     }
   </section>
 </BaseLayout>
+
+<script>
+  (() => {
+    const el = document.getElementById("typing-text");
+    const cursor = document.getElementById("typing-cursor");
+    if (!el || !cursor) return;
+
+    const phrases = [
+      "计算机专业学生",
+      "前端爱好者",
+      "旅行记录者",
+    ];
+
+    let phraseIdx = 0;
+    let charIdx = 0;
+    let deleting = false;
+    const typeSpeed = 80;    // ms per char typing
+    const deleteSpeed = 40;  // ms per char deleting
+    const pauseAfterType = 2000;
+    const pauseAfterDelete = 400;
+
+    function tick() {
+      const current = phrases[phraseIdx];
+
+      if (!deleting) {
+        // Typing forward
+        charIdx++;
+        el.textContent = current.slice(0, charIdx);
+
+        if (charIdx === current.length) {
+          deleting = true;
+          setTimeout(tick, pauseAfterType);
+          return;
+        }
+        setTimeout(tick, typeSpeed);
+      } else {
+        // Deleting
+        charIdx--;
+        el.textContent = current.slice(0, charIdx);
+
+        if (charIdx === 0) {
+          deleting = false;
+          phraseIdx = (phraseIdx + 1) % phrases.length;
+          setTimeout(tick, pauseAfterDelete);
+          return;
+        }
+        setTimeout(tick, deleteSpeed);
+      }
+    }
+
+    tick();
+  })();
+</script>
