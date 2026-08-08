@@ -8,7 +8,7 @@ import tailwindcss from "@tailwindcss/vite";
 // https://astro.build/config
 export default defineConfig({
   site: "https://patronum711.github.io",
-  base: "/miao-world",
+  base: "/Miao-World",
   integrations: [mdx(), react(), sitemap()],
   markdown: {
     shikiConfig: {

@@ -2,7 +2,7 @@
 
 个人综合性网站。包含博客、项目展示、关于页、全站搜索，预留旅行等板块扩展接口。
 
-在线地址: **https://patronum711.github.io/miao-world/**
+在线地址: **https://patronum711.github.io/Miao-World/**
 
 ## 技术栈
 
@@ -18,7 +18,7 @@
 ## 目录结构
 
 ```
-miao-world/
+Miao-World/
 ├── astro.config.mjs            # site + base + sitemap + legacy flag + tailwindcss
 ├── tsconfig.json               # extends astro/tsconfigs/strict
 ├── package.json                # 依赖与脚本 (build = astro build + pagefind)
@@ -89,7 +89,7 @@ Header 组件遍历渲染 + 自动高亮当前路由。搜索作为图标独立�
 ```ts
 // src/utils/path.ts
 import { href } from "../../utils/path";
-href("/blog")  // → "/miao-world/blog" (自动根据 base 前缀)
+href("/blog")  // → "/Miao-World/blog" (自动根据 base 前缀)
 ```
 
 **所有页面 `<a href>` 必须通过 `href()` 包装。** CSS/JS/图片等资源路径由 Astro + Vite 自动处理 base 前缀，`<a>` 标签不会。
@@ -184,7 +184,7 @@ cover: "/og-image.png"   # 可选
 
 ## 部署
 
-- 仓库 `miao-world` → `base: "/miao-world"` in `astro.config.mjs`
+- 仓库 `Miao-World` → `base: "/Miao-World"` in `astro.config.mjs`
 - push `main` → GitHub Actions 自动部署
 - Settings → Pages → Source = GitHub Actions
 
@@ -210,7 +210,7 @@ post.id.replace(/\.mdx?$/, "")
 
 ### 2. Astro 6 的 base 路径: 链接不自动前缀
 
-**问题**: 设置 `base: "/miao-world"` 后，CSS/JS/图片的 `<link>` 和 `<script>` 标签会自动加前缀，但 `<a href>` **不会**。直接写 `/blog` 会 404。
+**问题**: 设置 `base: "/Miao-World"` 后，CSS/JS/图片的 `<link>` 和 `<script>` 标签会自动加前缀，但 `<a href>` **不会**。直接写 `/blog` 会 404。
 
 **解决**: 所有页面链接必须通过 `src/utils/path.ts` 的 `href()` 函数:
 ```ts
@@ -219,7 +219,7 @@ export function href(path: string): string {
 }
 ```
 
-**双重前缀陷阱**: Pagefind 搜索结果返回的 `item.url` 已包含 `/miao-world/` 前缀(因为扫描的是 dist/ 中的 HTML)。对它再用 `href()` 会导致 `/miao-world/miao-world/...`。
+**双重前缀陷阱**: Pagefind 搜索结果返回的 `item.url` 已包含 `/Miao-World/` 前缀(因为扫描的是 dist/ 中的 HTML)。对它再用 `href()` 会导致 `/Miao-World/Miao-World/...`。
 → 对 Pagefind 结果直接清理后缀 (`.html`, `/index.html`) 即可，不准用 `href()`。
 
 ### 3. Pagefind: 三大连续陷阱
@@ -260,11 +260,11 @@ pagefind = pf.createInstance({ basePath: baseUrl + "/pagefind/" });
 
 #### 3c. Pagefind 必须用 `createInstance({ basePath })`
 
-Pagefind 默认从 `/pagefind/` 加载索引和 WASM 文件。在子路径部署时，实际路径是 `/miao-world/pagefind/`。使用模块级别的 `pf.init()` 会走默认路径导致 404。
+Pagefind 默认从 `/pagefind/` 加载索引和 WASM 文件。在子路径部署时，实际路径是 `/Miao-World/pagefind/`。使用模块级别的 `pf.init()` 会走默认路径导致 404。
 
 **解决**: 必须创建自定义实例并显式传入 basePath:
 ```js
-pagefind = pf.createInstance({ basePath: "/miao-world/pagefind/" });
+pagefind = pf.createInstance({ basePath: "/Miao-World/pagefind/" });
 await pagefind.init();  // 现在会从正确路径加载
 ```
 
