@@ -4,23 +4,23 @@ description: "整理计算机网络课程学习笔记，覆盖互联网基础、
 publishedAt: 2026-08-08
 tags: ["学习笔记", "计算机网络"]
 ---
-# Introduction
+## Introduction
 
-## 什么是Internet（互联网）
+### 什么是Internet（互联网）
 
-### 构成视角
+#### 构成视角
 
 一种构成：
 
-1.边缘edge
+##### 1.边缘edge
 
 主机host（端系统）及其上运行的应用程序
 
-2.核心core
+##### 2.核心core
 
 交换设备构成的网状网络（网络的网络）
 
-3.接入网access network
+##### 3.接入网access network
 
 有线或无线通信链路
 
@@ -31,29 +31,29 @@ My理解：
 
 另一种构成（看作图）：
 
-1.节点：
+##### 1.节点：
 
 主机及其上运行的应用程序（边缘节点）
 
 路由器、交换机等网络交换设备（中间节点）
 
-2.边：通信链路
+##### 2.边：通信链路
 
 接入网：主机连接到互联网的链路
 
 主干链路：交换设备之间的链路
 
-### 服务视角
+#### 服务视角
 
 1.使用通信设施进行通信的分布式应用
 
 2.为apps提供编程接口（通信服务）
 
-## 什么是protocol（协议）
+### 什么是protocol（协议）
 
 协议定义了多个通信实体之间的报文格式、次序、动作
 
-## 网络边缘edge
+### 网络边缘edge
 
 C-S模式：包括客户端和服务端，可扩展性较差
 P2P模式：多个主机间，客户端同时也是服务端
@@ -69,12 +69,12 @@ P2P模式：多个主机间，客户端同时也是服务端
 
 3.将packet发送给路由
 
-## 网络核心core
+### 网络核心core
 
 交换设备构成的网状网络（网络的网络）
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-003.png" alt="image 003" />
-### 基本问题：数据如何通过网络传输
+#### 基本问题：数据如何通过网络传输
 
 1.电路交换circuit switch
 
@@ -100,7 +100,7 @@ P2P模式：多个主机间，客户端同时也是服务端
 
 缺点：如果到达速率>输出速率，存在排队延迟和抛弃丢包（缓存满了）
 
-### 分组交换的核心功能：路由和转发
+#### 分组交换的核心功能：路由和转发
 
 1.路由routing（全局）
 
@@ -110,7 +110,7 @@ P2P模式：多个主机间，客户端同时也是服务端
 
 路由器查询转发表将分组由输入链路转移到输出链路
 
-### 分组交换网络的再分类（根据网络层）
+#### 分组交换网络的再分类（根据网络层）
 
 对于分组交换网络，根据网络层是否有连接，可再细分：
 
@@ -122,9 +122,9 @@ P2P模式：多个主机间，客户端同时也是服务端
 
 目标与源主机需建立虚拟联系，分组携带虚电路号，路由器根据虚电路号转发
 
-## 接入网access network和物理媒介physical media
+### 接入网access network和物理媒介physical media
 
-### 住宅接入网
+#### 住宅接入网
 
 具体而言的接入方式：
 
@@ -141,12 +141,12 @@ P2P模式：多个主机间，客户端同时也是服务端
 总体而言，住宅接入示意图：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-008.png" alt="image 008" />
-### 企业接入网
+#### 企业接入网
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-009.png" alt="image 009" />
-### 数据中心接入网
+#### 数据中心接入网
 
-### 物理媒介
+#### 物理媒介
 
 总体分为：导引性媒体 非导引性媒体
 
@@ -174,13 +174,13 @@ P2P模式：多个主机间，客户端同时也是服务端
 
 (5)卫星
 
-## ISP(Internet Service Provider)
+### ISP(Internet Service Provider)
 
 互联网服务提供商，提供网络接入服务。关系比较紧密的主机、路由器、通信链路组成的子系统网络。
 
 任何端系统（主机）都是通过接入ISP接入到互联网的，例如手机通过蜂窝接入到中国移动ISP最终接入互联网（网络核心），手机通过校园无线网接入到中大ISP最终接入互联网。
 
-## 互联网结构：网络的网络
+### 互联网结构：网络的网络
 
 将所有ISPs两两互联，不可拓展，连接数量巨大。
 
@@ -190,19 +190,19 @@ ICP：互联网内容提供商，例如百度谷歌
 
 ICP部署搭建专网，向用户提高高质量服务，减少向ISP支付的费用。
 
-## 性能Performance
+### 性能Performance
 
-### 延迟Delay
+#### 延迟Delay
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-010.png" alt="image 010" />
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-011.jpg" alt="image 011" />
 节点总延迟=节点处理延迟+排队延迟+传输延迟+传播延迟
 
-1.节点处理延迟 nodal processing（路由器输入端口）
+##### 1.节点处理延迟 nodal processing（路由器输入端口）
 
 检查比特错误，确定输出链路，通常速度极快，可忽略
 
-2.排队延迟 queueing（路由器输入端口缓存排队+输出端口缓存排队）
+##### 2.排队延迟 queueing（路由器输入端口缓存排队+输出端口缓存排队）
 
 在缓存中排队造成的延迟，取决于路由器的拥塞程度，可变程度最大
 
@@ -215,13 +215,13 @@ a为packet每秒到达个数(个/s)，La为到达速率，R为输出速率（带
 
 当值大于1，此时网络将无法正常服务。
 
-3.传输延迟 transmission（路由器输出端口）
+##### 3.传输延迟 transmission（路由器输出端口）
 
 将一个数据包的所有比特“推”到链路上所需的时间；
 
 传输延迟 = 数据包长度（L） / 链路带宽（R）
 
-4.传播延迟 propagation（链路传播）
+##### 4.传播延迟 propagation（链路传播）
 
 数据包中每个比特从链路的起点传播到终点的所需时间
 
@@ -231,21 +231,21 @@ a为packet每秒到达个数(个/s)，La为到达速率，R为输出速率（带
 
 可能是传输延迟占主导，也可能是传播延迟占主导
 
-traceroute作用：
+##### traceroute作用：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-013.png" alt="image 013" />
 测量数据包源主机到目标主机所经过的网络路径，并测量每一跳的延迟。
 
-traceroute原理：
+##### traceroute原理：
 
 每次发送3给数据包（用于取平均值），并将第一个包的TTL（声明周期）设为1，之后每个包的TTL依次加1。当路由器收到一个TTL为1的数据包时，会将其丢弃，并向源主机发回消息​​。源主机通过接收这些消息，就能获知沿途每个路由器的IP地址和往返延迟。此过程持续直到数据包到达目标主机。
 
-### 丢包loss
+#### 丢包loss
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-014.png" alt="image 014" />
 节点缓存是有限的，当缓存队列已满时，就会产生丢包，丢失的包可能被上一个节点或者源主机重新发送，或者不进行任何处理。
 
-### 吞吐量throughout
+#### 吞吐量throughout
 
 吞吐量：bits从源主机到目标主机的发送速率（bits/s）
 
@@ -257,9 +257,9 @@ traceroute原理：
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-016.jpg" alt="image 016" />
 时延带宽积（链路以比特为为单位的长度）= 带宽R*传播时延dprop
 
-## 安全（了解）
+### 安全（了解）
 
-### 三个核心安全思维
+#### 三个核心安全思维
 
 ​​攻击思维:​​ 思考潜在攻击者（“坏人”）会如何攻击网络。
 
@@ -267,104 +267,104 @@ traceroute原理：
 
 ​​免疫思维:​​ 思考如何从系统架构设计之初就实现对攻击的免疫力，而非事后修补。
 
-### 三种常见网络攻击方式
+#### 三种常见网络攻击方式
 
-1.Packet Sniffing（数据包嗅探）
+##### 1.Packet Sniffing（数据包嗅探）
 
 攻击者拦截并监听网络中传输的数据包，以窃取其中的信息。在广播型网络介质中极易实现，例如传统的​​共享式以太网（Hub）​​或​​无线网络（Wi-Fi）。​​ 将网卡设置为​​混杂模式 (promiscuous mode)​​。在此模式下，网卡会接收并读取所有流经该网络的数据包，而不仅仅是发给自己的包。
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-017.png" alt="image 017" />
-2.IP Spoofing（IP欺骗）
+##### 2.IP Spoofing（IP欺骗）
 
 攻击者伪造数据包的源IP地址，冒充另一台合法主机的身份。直接向目标主机（如图中的服务器A）发送数据包，但将数据包中的“源IP地址”字段填写为另一台无辜主机的地址（如图中的B）。
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-018.png" alt="image 018" />
-3.Denial of Service（拒绝服务攻击）
+##### 3.Denial of Service（拒绝服务攻击）
 
 攻击者通过海量的虚假流量淹没目标资源（如服务器、网络带宽），使其无法为合法用户提供正常服务。
 
-### 防御措施
+#### 防御措施
 
-1.身份认证 (Authentication)：证明你是你声称的那个人
+##### 1.身份认证 (Authentication)：证明你是你声称的那个人
 
 eg：蜂窝网络通过sim卡来提供身份认证
 
-2.保密性 (Confidentiality)：防止信息被监听
+##### 2.保密性 (Confidentiality)：防止信息被监听
 
 ​​通过加密 (Encryption)​​。即使数据被嗅探，攻击者得到的也只是无法读懂的密文。
 
-3.​完整性检查 (Integrity Checks)：防止信息被篡改
+##### 3.​完整性检查 (Integrity Checks)：防止信息被篡改
 
 数字签名 (Digital Signatures)​​等技术可以验证数据在传输过程中是否被修改。
 
-4.访问限制 (Access Restrictions)：控制谁可以访问网络资源。
+##### 4.访问限制 (Access Restrictions)：控制谁可以访问网络资源。
 
 密码保护的可信网络（VPN）​​ 可以建立一个安全的通信隧道，只有授权用户才能接入内部网络。
 
-5.防火墙 (Firewalls):​ 作为专门的“中间盒”设备，部署在接入网和核心网中，执行安全策略。
+##### 5.防火墙 (Firewalls):​ 作为专门的“中间盒”设备，部署在接入网和核心网中，执行安全策略。
 
 ​​默认拒绝 (Off-by-default):​​ 根据预设规则（如源/目标IP、端口号）过滤传入的数据包，只放行必要的流量。
 
 ​​应对DoS攻击 (Detecting/Reacting to DoS):​​ 高级防火墙可以识别异常流量模式并采取措施缓解DoS攻击。
 
-## 协议分层
+### 协议分层
 
-### 分层的好处
+#### 分层的好处
 
 1.清晰化结构（Explicit Structure）​​：分层提供了一个清晰的​​参考模型（reference model）​​，使得我们能够准确地识别系统的各个组成部分（每一层）并理解它们之间的关系（上层使用下层的服务）。
 
 2.模块化（Modularization）​​：分层将系统划分为多个层，这使得维护和更新变得简单。某一层内部服务实现的变更，对于系统的其他部分是​​透明​​的。
 
-### 互联网分层模型
+#### 互联网分层模型
 
-1.应用层application
+##### 1.应用层application
 
 职责​​：直接为用户的​​网络应用​​提供服务，实现应用层面的逻辑。
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-019.png" alt="image 019" />
 ​​协议​​：​​HTTP​​、​​SMTP​​、​​DNS​​、IMAP等。
 
-2.传输层transport
+##### 2.传输层transport
 
 职责​​：负责​​端到端​​（进程到进程）的数据传输服务。它将应用层消息分解成​​段（Segment）​​，并提供可靠或不可靠的传输。
 
 ​​协议​​：​​TCP​​（可靠、面向连接）、​​UDP​​（不可靠、无连接）。
 
-3.网络层network
+##### 3.网络层network
 
 职责​​：负责在​​整个网络​​范围内，将​​数据报（Datagram）​​ 从源主机​​路由​​到目标主机。这是实现全球互联网通信的关键。
 
 ​​协议​​：​​IP协议​​（核心）、各种路由协议（如OSPF, BGP）。
 
-4.连接层link
+##### 4.连接层link
 
 职责​​：负责在​​相邻​​的网络节点（如两台相连的路由器、电脑和交换机）之间传输​​数据帧（Frame）​​。
 
 ​​协议​​：Ethernet（以太网）、802.11（WiFi）、PPP。
 
-5.物理层physical
+##### 5.物理层physical
 
 ​​职责​​：负责在物理媒介上传输原始的​​比特流（bits）​​
 
 ​​协议/标准​​：双绞线、光纤、无线电等物理媒介的规范。
 
-### 封装Encapsulation
+#### 封装Encapsulation
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-020.png" alt="image 020" />
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-021.png" alt="image 021" />
-# Application Layer
+## Application Layer
 
-## 网络应用的规则（本章概览）
+### 网络应用的规则（本章概览）
 
-### 网络应用的开发位置
+#### 网络应用的开发位置
 
 网络应用程序只运行在​​终端系统上，而​​不运行在网络核心设备​​上，不同网络应用程序通过互联网联系。
 
 好处：应用程序可以快速开发和部署，无需改变网络核心基础设施。
 
-### 网络应用的两大主流架构
+#### 网络应用的两大主流架构
 
-1.Client-Server模式
+##### 1.Client-Server模式
 
 Server：
 
@@ -378,7 +378,7 @@ Server：
 
 ​​例子：​​ HTTP（Web）、IMAP（邮件）、FTP（文件传输）等都是典型的C/S架构。
 
-2.Peer-Peer模式（对等模式）
+##### 2.Peer-Peer模式（对等模式）
 
 每个参与者既可以是客户端，也可以是服务器。没有长期在线的服务器。
 
@@ -394,7 +394,7 @@ Server：
 
 ​​典型例子：​​ P2P文件共享系统
 
-### 通信的基本单位：进程Processes
+#### 通信的基本单位：进程Processes
 
 网络通信的本质是​​运行在不同主机上的应用程序进程之间​​的通信。
 
@@ -402,30 +402,30 @@ Server：
 
 ​​不同主机间（即网络通信）：进程通过​​交换消息Messages来通信。这正是网络应用层要解决的问题。
 
-### 通信的接口：套接字Socket
+#### 通信的接口：套接字Socket
 
 套接字是网络应用程序与网络协议栈之间的​​编程接口（API）​​，是进程用于发送和接收消息的“大门”。
 
 ​​套接字隔离了应用程序和复杂的网络硬件，让开发者可以专注于应用逻辑，而不必操心消息是如何在网络中路由的。​​每个通信会话都涉及两个套接字：通信双方各一个。​
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-022.png" alt="image 022" />
-### 如何找到通信对象：寻址Addressing
+#### 如何找到通信对象：寻址Addressing
 
 使用主机​​IP地址（32位） + 端口号Port Number来唯一标识一个主机上的进程。
 
-### 通信规则：应用层协议Protocol
+#### 通信规则：应用层协议Protocol
 
 通信双方必须遵循约定好的规则，即应用层协议，定义了：
 
-1.消息类型
+##### 1.消息类型
 
 交换什么消息，如请求（Request）、响应（Response）。
 
-2.消息语法
+##### 2.消息语法
 
 消息的格式或结构，各个字段如何排列和分隔
 
-3.消息语义
+##### 3.消息语义
 
 每个字段的含义是什么
 
@@ -439,11 +439,11 @@ Server：
 
 ​​专有协议，如Skype、Zoom，其细节不公开。
 
-### 应用对传输的要求
+#### 应用对传输的要求
 
 不同的网络应用对数据传输服务有​​不同的需求​​。因此，开发者需要根据这些需求来选择合适的下层（传输层）协议。
 
-1.数据完整性 (Data Integrity)：​​
+##### 1.数据完整性 (Data Integrity)：​​
 
 ​​要求100%可靠：不能容忍任何数据丢失或错误。（如文件传输、电子邮件、网页浏览。）
 
@@ -468,9 +468,9 @@ Server：
 是否需要加密、认证等安全服务。
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-023.png" alt="image 023" />
-### 传输层协议选择：TCP UDP
+#### 传输层协议选择：TCP UDP
 
-1.TCP
+##### 1.TCP
 
 ​​可靠传输：在发送和接收进程之间提供可靠传输​​
 
@@ -482,13 +482,13 @@ Server：
 
 ​​不提供：​​定时（保证）、最低吞吐量保证、安全性（传输的是明文）
 
-2.UDP
+##### 2.UDP
 
 1.在发送和接收进程之间提供不可靠的数据传输​​
 
 2.不提供：可靠性、流量控制、拥塞控制、定时、吞吐量保证、安全性，或连接建立。（简单，可以用应用层来实现这些，将控制权交给应用）
 
-TLS（传输层安全，在应用层实现）：
+##### TLS（传输层安全，在应用层实现）：
 
 1.普通TCP/UDP的安全问题
 
@@ -506,16 +506,16 @@ TLS（传输层安全，在应用层实现）：
 
 应用程序调用TLS库的函数，TLS层接收来自应用层的明文数据，并对其进行​​加密​​、​​完整性校验​​和​​认证​​，再使用标准的TCP套接字​​。
 
-## Web and HTTP
+### Web and HTTP
 
-### Web基础
+#### Web基础
 
 网页由多个​​对象组成，如HTML文件、JPEG图片、音频文件，存储于服务器上，每个对象都可通过一个​​URL（统一资源定位符）来寻址。
 
 URL= ​​主机名+路径名
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-024.png" alt="image 024" />
-### HTTP概述
+#### HTTP概述
 
 ​​HTTP（超文本传输协议）​​是Web的应用层协议，采用C/S模型
 
@@ -525,9 +525,9 @@ URL= ​​主机名+路径名
 
 HTTP信息包括request和response
 
-### 请求Request
+#### 请求Request
 
-通用格式：
+##### 通用格式：
 
 ​​请求行（Request Line）​​：方法+URL+协议版本。
 
@@ -537,7 +537,7 @@ HTTP信息包括request和response
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-025.png" alt="image 025" />
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-026.png" alt="image 026" />
-请求类型：
+##### 请求类型：
 
 GET​​：请求指定资源。可将用户输入参数附加在URL后。
 
@@ -547,9 +547,9 @@ GET​​：请求指定资源。可将用户输入参数附加在URL后。
 
 ​​PUT​​：向服务器上传新文件，替换指定URL处的资源。
 
-### 响应Response
+#### 响应Response
 
-通用格式：
+##### 通用格式：
 
 状态行（Status Line）​​：协议版本+状态码+状态短语
 
@@ -558,7 +558,7 @@ GET​​：请求指定资源。可将用户输入参数附加在URL后。
 ​​数据（Data）​​：请求的对象本身（如HTML文件内容）。
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-027.png" alt="image 027" />
-状态码：
+##### 状态码：
 
 200 OK​​：请求成功。
 
@@ -570,7 +570,7 @@ GET​​：请求指定资源。可将用户输入参数附加在URL后。
 
 ​​505 HTTP Version Not Supported​​：服务器不支持请求中使用的 HTTP 协议版本。
 
-### HTTP的两种类型（HTTP1 HTTP1.1）
+#### HTTP的两种类型（HTTP1 HTTP1.1）
 
 非持久HTTP (Non-persistent HTTP)​​： HTTP/1.0默认使用的。每次获取一个Web对象（如HTML文件、图片），都需要经历一次完整的TCP连接建立、数据传输和连接关闭的过程。如果要获取多个对象，就必须重复多次这个过程。
 
@@ -578,7 +578,7 @@ GET​​：请求指定资源。可将用户输入参数附加在URL后。
 
 RRT(Round-Trip Time)：数据包从客服端到服务端一个往返的时间。
 
-以客户端请求一个HTML+n个图片资源为例：
+##### 以客户端请求一个HTML+n个图片资源为例：
 
 1.非持久+串行请求
 
@@ -592,13 +592,13 @@ RRT(Round-Trip Time)：数据包从客服端到服务端一个往返的时间。
 4.持久+并行请求
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-031.jpg" alt="image 031" />
-### Cookies
+#### Cookies
 
 HTTP协议本身是无状态的（即服务器不会记录客户端的状态），HTTP请求独立。
 
 服务器和客户端之间利用cookies来记录状态。
 
-Cookies的组成部分（存在位置）：
+##### Cookies的组成部分（存在位置）：
 
 1.HTTP响应的头部行
 
@@ -608,7 +608,7 @@ Cookies的组成部分（存在位置）：
 
 4.服务端的Cookies文件，由服务端后台数据库维护
 
-Cookies的生成过程：
+##### Cookies的生成过程：
 
 1.用户首次访问某个网站，发送首个HTTP请求
 
@@ -619,7 +619,7 @@ Cookies的生成过程：
 4.服务器收到携带Cookie的请求后，可以比对数据库信息，获取对应的用户状态信息
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-032.png" alt="image 032" />
-Cookies的作用：
+##### Cookies的作用：
 
 1.认证
 
@@ -629,13 +629,13 @@ Cookies的作用：
 
 4.用户会话状态
 
-Cookies隐私问题：
+##### Cookies隐私问题：
 
 在特定网站内追踪用户行为（第一方Cookie）;
 
 跨多个网站追踪用户行为（第三方Cookie），即使用户从未主动访问追踪者网站,这种追踪对用户可能是不可见的.
 
-第三方Cookie例子：
+##### 第三方Cookie例子：
 
 1.用户首次访问nytimes（第一方），生成cookie1634
 
@@ -646,10 +646,10 @@ Cookies隐私问题：
 4.用户再次访问nytimes，获取Ad广告时，Ad又可以根据历史状态（现在有袜子网站的跳转记录）推荐袜子广告。
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-033.png" alt="image 033" />
-### Web Caches(Proxy servers/代理服务器)
+#### Web Caches(Proxy servers/代理服务器)
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-034.png" alt="image 034" />
-过程：
+##### 过程：
 
 在客户端中和服务器之间建立一个Web Cache服务器。
 
@@ -659,22 +659,22 @@ Cookies隐私问题：
 
 Web Cache即作为服务器又作客户端。
 
-好处：
+##### 好处：
 
 降低响应时间，减少接入网拥塞
 
-### 浏览器缓存
+#### 浏览器缓存
 
 当浏览器缓存有最新的资源时请求，服务器无需再返回该资源。
 
-过程：
+##### 过程：
 
 浏览器再次发送请求时携带文件的修改日期If-modified-since: <date>
 
 服务器返回时，如果浏览器请求文件没有更新，返回HTTP/1.0 304 Not Modified
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-035.png" alt="image 035" />
-### HTTP2 HTTP3
+#### HTTP2 HTTP3
 
 多文件获取时：
 
@@ -691,12 +691,12 @@ HTTP2：将文件划分为若干帧交替进行传输.
 HTTP3：基于UDP的QUIC协议，解决了“队头堵塞”。QUIC 协议从一开始就​​强制使用加密​​（相当于 TLS 1.3）。安全不再是可选项，而是协议的基本组成部分。这提供了更好的隐私和安全性。
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-038.png" alt="image 038" />
-## Email SMTP IMAP
+### Email SMTP IMAP
 
-### Email
+#### Email
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-039.png" alt="image 039" />
-组成部分：
+##### 组成部分：
 
 1.user agent
 
@@ -704,24 +704,24 @@ HTTP3：基于UDP的QUIC协议，解决了“队头堵塞”。QUIC 协议从一
 
 3.simple mail transfer protocol: SMTP
 
-User Agent/Mail Reader：
+##### User Agent/Mail Reader：
 
 编写编辑阅读邮件
 
-Email Server：
+##### Email Server：
 
 多个邮箱：存储不同用户的已收到邮件
 
 发送邮件队列：存储要发送的邮件
 
-SMTP Protocol：
+##### SMTP Protocol：
 
 介于不同的Email Server之间，即”Client”和”Server”之间
 
-### SMTP
+#### SMTP
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-040.png" alt="image 040" />
-SMTP特点：
+##### SMTP特点：
 
 1.使用TCP，默认通信端口25​​。
 
@@ -731,7 +731,7 @@ SMTP特点：
 
 ​​响应​​：由服务器发出，包含一个​​三位数字的状态码​​和一个​​文本短语​​。
 
-邮件通信的三个阶段：
+##### 邮件通信的三个阶段：
 
 1.握手阶段：
 
@@ -752,14 +752,14 @@ DATA： 开始传输邮件的实际内容和头部（主题、日期等）。邮
 
 客户端发送QUIT命令来结束会话，并关闭TCP连接。
 
-SMTP例子：
+##### SMTP例子：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-041.png" alt="image 041" />
-SMTP与HTTP对比：
+##### SMTP与HTTP对比：
 
 共同点：都使用ASCII码的命令/响应交互模式和状态码
 
-不同点：
+##### 不同点：
 
 1.交互模式：Push vs. Pull
 
@@ -781,7 +781,7 @@ SMTP使用持久性连接
 
 SMTP要求邮件消息的头部和主体所有字符必须是7位ASCII码
 
-### IMAP
+#### IMAP
 
 RFC 5322规定了邮件报文本身的格式，如下：
 
@@ -796,15 +796,15 @@ Subject:
 IMAP是一种邮件访问协议，规定了agent如何自己的邮件server中拉取邮件。
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-042.png" alt="image 042" />
-## DNS(The Domain Name System)
+### DNS(The Domain Name System)
 
-### 概述
+#### 概述
 
 DNS是互联网的一项核心服务，本质是一个​​采用层级结构的分布式数据库​​。主要功能是解决“域名”到“IP地址的映射”。
 
 在应用层实现，复杂性体现在边缘。
 
-### DNS提供的服务
+#### DNS提供的服务
 
 1.主机名到IP地址转换​​：最核心、最基础的服务
 
@@ -814,7 +814,7 @@ DNS是互联网的一项核心服务，本质是一个​​采用层级结构�
 
 ​​4.负载分配​​：对于一个非常繁忙的网站，可以对应多个IP地址。DNS服务器可以在每次查询时轮换返回这些IP地址，从而将访问流量分散到不同的服务器上，实现负载均衡。
 
-### DNS的结构
+#### DNS的结构
 
 不采用中心化结构的原因：
 
@@ -823,36 +823,36 @@ DNS是互联网的一项核心服务，本质是一个​​采用层级结构�
 故采用树状分层的分布式结构：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-043.png" alt="image 043" />
-1.根域名服务器(root name DNS servers)
+##### 1.根域名服务器(root name DNS servers)
 
 层次结构的顶端，是“官方最后联系点”，极其重要。
 
 通过​​全球冗余部署​​来保证可靠性（全球13个逻辑根服务器，每个都有大量副本）
 
-2.顶级域服务器(Top-Level Domian DNS servers)
+##### 2.顶级域服务器(Top-Level Domian DNS servers)
 
 负责管理顶级域名，如 .com, .org, .net, .edu等通用顶级域，以及国家代码顶级域如 .cn, .uk等。例如，.com顶级域服务器，存储了example.com的权威服务器的NS记录(example.com, dns1.example.com)
 
-3.权威域名服务器​​(authoritative DNS servers)
+##### 3.权威域名服务器​​(authoritative DNS servers)
 
 每个组织都有自己的权威服务器，或使用服务提供商（如阿里云）的权威服务器。
 
 它存储并提供该组织下所有公开主机名到IP地址的​​权威​​映射(A记录)
 
-### 本地DNS服务器(Local DNS servers)
+#### 本地DNS服务器(Local DNS servers)
 
 本质上是Web Caches缓存服务器，通常由终端主机的ISP提供。不属于​​严格的DNS层次结构，但对性能至关重要。
 
 当用户终端需要解析域名时，首先向本地DNS服务器发起查询，本地DNS服务器会代表用户去完成迭代或递归查询过程，并缓存结果，以加快后续相同查询的速度并减少上层服务器的压力。
 
-### 域名的两种解析/查询方式
+#### 域名的两种解析/查询方式
 
-1.迭代查询
+##### 1.迭代查询
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-044.png" alt="image 044" />
 本地DNS服务器承担主要查询任务，被请求的服务器如果不知道答案，不会代劳，而是​​告诉本地DNS服务器下一步去查询的服务器​​。
 
-2.递归查询
+##### 2.递归查询
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-045.png" alt="image 045" />
 将解析的负担完全放在被联系的服务器上。每台主机只发出一次请求，然后​​等待最终的答案​​。
@@ -867,7 +867,7 @@ DNS是互联网的一项核心服务，本质是一个​​采用层级结构�
 
 迭代查询主要发生在DNS服务器。
 
-### DNS缓存机制
+#### DNS缓存机制
 
 工作原理​​：任何DNS服务器在收到一个查询结果后，都可以将其​​缓存​​一段时间。
 
@@ -877,7 +877,7 @@ DNS是互联网的一项核心服务，本质是一个​​采用层级结构�
 
 每个缓存记录都有一个​​生存时间​​，由域名的管理者在记录中设置。一旦TTL到期，缓存条目就会被清除，下次查询必须重新走完整流程。
 
-好处：
+##### 好处：
 
 极大提升响应速度；减少全球DNS系统负载
 
@@ -885,13 +885,13 @@ DNS是互联网的一项核心服务，本质是一个​​采用层级结构�
 
 ​​数据可能过时​​：如果某个网站更换了IP地址，在全世界DNS缓存的TTL全部过期之前，部分用户可能仍会被导向旧的IP地址。
 
-### DNS资源记录
+#### DNS资源记录
 
 DNS数据库实际上是由一条条的​​资源记录​​(RR)组成的。
 
 RR格式为：(Name, Value, Type, TTL)。
 
-Type=A​​
+##### Type=A​​
 
 ​​Name​​: 主机名（如 www.example.com）
 
@@ -923,12 +923,12 @@ Type=A​​
 
 ​​作用​​：​​专门用于电子邮件路由​​，非常重要。它确保发送到 user@example.com的邮件能被正确投递到 mail.example.com。
 
-### DNS协议报文
+#### DNS协议报文
 
 DNS query和response报文都具有以下的格式：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-046.png" alt="image 046" />
-### DNS安全
+#### DNS安全
 
 1.Ddos attacks：
 
@@ -938,9 +938,9 @@ DNS query和response报文都具有以下的格式：
 
 欺骗攻击，不直接瘫痪服务，而是“欺骗”系统，提供虚假的DNS信息，将用户引导到恶意的网站。
 
-## P2P应用
+### P2P应用
 
-### 概述/核心特征
+#### 概述/核心特征
 
 无中心服务器​​: 没有“始终在线”的专用服务器。网络中的每个peer既是客户端也是服务器。
 
@@ -950,21 +950,21 @@ DNS query和response报文都具有以下的格式：
 
 ​​动态性​​: 对等方可以随时加入或离开网络，IP地址也会变化，这增加了管理的复杂性。
 
-### 文件分发时间：C/S架构和P2P架构对比
+#### 文件分发时间：C/S架构和P2P架构对比
 
-1.C/S架构
+##### 1.C/S架构
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-047.png" alt="image 047" />
 C/S架构的分发时间 ​​随着客户端数量N线性增长​​。服务器的上传带宽 u_s是一个固定瓶颈，用户越多，服务器压力越大，分发时间越长。
 
-2.P2P架构
+##### 2.P2P架构
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-048.png" alt="image 048" />
 N*F/(u_s + Σu_i)随着N增大，但​​分母也在同步增大​​（因为Σu_i随着对等方数量N增加而增加）。因此，分发时间不会像C/S架构那样线性增长，而是缓慢增长。
 
-### BitTorrent（“种子”网络）
+#### BitTorrent（“种子”网络）
 
-1.概念
+##### 1.概念
 
 文件分块: 文件被分割成多个固定大小（如256KB）的chunk。
 
@@ -972,7 +972,7 @@ Tracker: 一个中心目录服务器，不存储文件本身。作用是记录�
 
 Torrent: 指正在互相交换某个特定文件的所有peer组成的群体
 
-2.新peer加入BitTorrent流程
+##### 2.新peer加入BitTorrent流程
 
 (1).新peer首先连接到 ​​Tracker​​
 
@@ -982,7 +982,7 @@ Torrent: 指正在互相交换某个特定文件的所有peer组成的群体
 
 (4).建立连接后，新peer开始与这些对等方​​直接交换​​文件数据块。
 
-3.新peer加入BitTorrent后的生命周期
+##### 3.新peer加入BitTorrent后的生命周期
 
 (1).初始状态：peer没有任何chunk
 
@@ -992,7 +992,7 @@ Torrent: 指正在互相交换某个特定文件的所有peer组成的群体
 
 (4).获得完整文件后，它有两种选择：自私地离开​​，停止上传，消耗完资源后退出;无私地留下​​，继续做“种子”，为其他对等方提供上传服务。
 
-4.peer的请求下载与上传策略算法
+##### 4.peer的请求下载与上传策略算法
 
 下载策略：
 
@@ -1006,9 +1006,9 @@ Torrent: 指正在互相交换某个特定文件的所有peer组成的群体
 
 (2)每30秒​​随机选择​​一个当前被阻塞的对等方，临时解除对其的阻塞，并开始向其发送数据
 
-## 视频流与CDN（内容分发网络）
+### 视频流与CDN（内容分发网络）
 
-### 编码(Encoding)：视频的产生
+#### 编码(Encoding)：视频的产生
 
 视频的构成：帧，每一帧图像是矩阵
 
@@ -1030,7 +1030,7 @@ Torrent: 指正在互相交换某个特定文件的所有peer组成的群体
 
 2.VBR（可变速率）：根据画面动态调整数据量，更优
 
-### 播放缓存(playout buffering)：视频的接收
+#### 播放缓存(playout buffering)：视频的接收
 
 普通流式存储视频：按帧传和播放，而不是整个视频传完再播放
 
@@ -1042,7 +1042,7 @@ Torrent: 指正在互相交换某个特定文件的所有peer组成的群体
 解放方案：客户端引入缓冲区，缓冲若干帧后再开始播放
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-050.png" alt="image 050" />
-### DASH：视频的传输
+#### DASH：视频的传输
 
 Server的职责：
 
@@ -1060,7 +1060,7 @@ Client的职责：
 
 查询manifest file，进行决策：决策内容包括What（请求什么编码的chunk）、When（什么时候请求）、Where（向哪个CDN节点请求）
 
-### CDN(Content Distribution Networks)
+#### CDN(Content Distribution Networks)
 
 单一服务器的缺点：
 
@@ -1072,17 +1072,17 @@ Client的职责：
 
 CDN概念：将视频副本存储在大量分布的服务器上，这些服务器就叫做CDN
 
-CDN两种部署方式：
+##### CDN两种部署方式：
 
 1.enter deep：部署在接入网中，更接近用户
 
 2.bring home：在关键枢纽靠近用户。在数量较少的互联网交换中心或网络接入点部署规模较大的服务器集群。
 
-# Transport Layer
+## Transport Layer
 
-## 传输层概述
+### 传输层概述
 
-### 传输层提供的服务
+#### 传输层提供的服务
 
 传输层服务=本层实现的服务+调用网络层（下层）的服务
 
@@ -1092,7 +1092,7 @@ CDN两种部署方式：
 
 延迟保证、带宽保证
 
-### 传输层的具体行为
+#### 传输层的具体行为
 
 发送方（多路复用）：
 
@@ -1114,7 +1114,7 @@ CDN两种部署方式：
 
 4.传递：通过套接字将消息传递给正确的应用进程
 
-### 传输层的协议
+#### 传输层的协议
 
 TCP协议(Transmission Control Protocol)  可靠、面向连接
 
@@ -1134,51 +1134,51 @@ UDP协议(User Datagram Protocol) 不可靠、无连接
 
 3.无连接：传输数据无需连接
 
-### 传输层segments
+#### 传输层segments
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-051.png" alt="image 051" />
 一定都包含：源端口+目标端口
 
 TCP协议和UDP协议具有不同的其他字段（TCP更多，因为需实现更可靠服务）
 
-### 传输层与网络层的对比
+#### 传输层与网络层的对比
 
 传输层：进程到进程的通信（header增加port）
 
 网络层：主机到主机的通信（header增加ip）
 
-## 多路复用(multiplexing)和多路分解(demultiplexing)
+### 多路复用(multiplexing)和多路分解(demultiplexing)
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-052.png" alt="image 052" />
-### Multiplexing
+#### Multiplexing
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-053.png" alt="image 053" />
 来自不同应用进程的message通过不同的套接字传输层接口，传输层接口封装头部信息后，将segment传输给网络层
 
-### Demultiplexing
+#### Demultiplexing
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-054.png" alt="image 054" />
 传输层接收来自网络层的segments数据段，解析头部信息，重组为message，通过不同套接字发送到不同的应用进程
 
-多路分解：传输层如何将segments传递到正确的socket
+##### 多路分解：传输层如何将segments传递到正确的socket
 
-1.无连接多路分解（UDP）
+##### 1.无连接多路分解（UDP）
 
 根据(目标IP, 目标端口)发送到对应的socket
 
 UDP socket 由目的IP、目的port唯一标识，也就是说同一主机上的同一进程只能有一个UDP socket；
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-055.png" alt="image 055" />
-2.有连接多路分解（TCP）
+##### 2.有连接多路分解（TCP）
 
 根据(源IP, 源端口, 目标IP, 目标端口)发送到对应的socket
 
 TCP socket 由目的IP、目的port、源IP、源port唯一标识，也就是说同一主机上的同一进程可以有个TCP socket；
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-056.png" alt="image 056" />
-## 传输层协议：UDP (User Datagram Protocol)
+### 传输层协议：UDP (User Datagram Protocol)
 
-### 特点
+#### 特点
 
 1.不可靠（可能丢包）、无序交付
 
@@ -1188,7 +1188,7 @@ TCP socket 由目的IP、目的port、源IP、源port唯一标识，也就是说
 
 如需可靠传输：可在应用层添加所需的可靠性机制和拥塞控制（选择权交给应用）
 
-### 应用场景
+#### 应用场景
 
 流媒体应用
 
@@ -1198,7 +1198,7 @@ SNMP
 
 HTTP/3
 
-### 传输层行为（UDP协议）
+#### 传输层行为（UDP协议）
 
 发送方（多路复用）：
 
@@ -1220,12 +1220,12 @@ HTTP/3
 
 4.传递：通过套接字将消息传递给正确的应用进程
 
-### 传输层segment格式（UDP）
+#### 传输层segment格式（UDP）
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-057.png" alt="image 057" />
-### UDP错误检查机制：checksum（校验和）
+#### UDP错误检查机制：checksum（校验和）
 
-​​发送方​​：
+##### ​​发送方​​：
 
 1.将UDP数据段内容视为一系列16位的整数。
 
@@ -1245,9 +1245,9 @@ HTTP/3
 
 ​​相等​​：​​未检测到错误​​。但需要注意，这​​不绝对意味着数据100%正确
 
-## RDT可靠数据传输（Reliable Data Transfer）
+### RDT可靠数据传输（Reliable Data Transfer）
 
-### 概述
+#### 概述
 
 是什么：一种传输层协议模型
 
@@ -1255,7 +1255,7 @@ HTTP/3
 
 RDT协议的复杂性取决于下层信道的特性。
 
-下层信道具有特性的可能情况：
+##### 下层信道具有特性的可能情况：
 
 1.完全可靠
 
@@ -1266,36 +1266,36 @@ RDT协议的复杂性取决于下层信道的特性。
 4.可能发生错误、丢包和乱序的信道​
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-058.png" alt="image 058" />
-### RDT模型中的接口
+#### RDT模型中的接口
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-059.png" alt="image 059" />
-### RDT模型中的设计方法论
+#### RDT模型中的设计方法论
 
-1.设计思路
+##### 1.设计思路
 
 逐步开发：网络信道逐步增加不可靠性，RDT复杂性逐步增加
 
 单向数据传输，双向控制流
 
-2.设计工具：有限状态机
+##### 2.设计工具：有限状态机
 
-### RDT1.0
+#### RDT1.0
 
 信道特性：可靠（无比特错误，无丢包）
 
-Sender状态图：
+##### Sender状态图：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-060.png" alt="image 060" />
-Receiver状态图：
+##### Receiver状态图：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-061.png" alt="image 061" />
-### RDT2.0
+#### RDT2.0
 
 信道特性：存在比特错误（但假设ACK、NAK不会出错）
 
 应对措施：检测机制（使用checksum）+反馈机制+重传机制
 
-反馈机制：
+##### 反馈机制：
 
 ACK​​：接收方收到​​完好​​的数据包后，发送一个​​肯定确认​​
 
@@ -1303,13 +1303,13 @@ ACK​​：接收方收到​​完好​​的数据包后，发送一个​�
 
 重传机制：发送方在收到​​NAK​​后，会重新发送该数据包
 
-Sender状态图：
+##### Sender状态图：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-062.png" alt="image 062" />
-Reciver状态图：
+##### Reciver状态图：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-063.png" alt="image 063" />
-### RDT2.1
+#### RDT2.1
 
 信道特性：存在比特错误（ACK、NAK可能会出错）
 
@@ -1319,10 +1319,10 @@ RDT2.0的缺陷：ACK和NAK数据包本身可能出现比特错误，Sender不�
 
 解决方案：Sender收到损坏的ACK/NAK时，重传+数据包packet引入序列号
 
-Sender状态图：
+##### Sender状态图：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-064.png" alt="image 064" />
-Reciver状态图：
+##### Reciver状态图：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-065.png" alt="image 065" />
 假设两个情景（走一遍，的确不会重复）：
@@ -1331,7 +1331,7 @@ Reciver状态图：
 
 2.Sender发送，R接收损坏，发NAK回去，但损坏
 
-### RDT2.2
+#### RDT2.2
 
 信道特性：存在比特错误（ACK、NAK可能会出错）
 
@@ -1341,10 +1341,10 @@ RDT2.1的优化：只使用ACK实现相同功能；引入​​带有序号的AC
 
 其他：TCP就是RDT2.2的实现
 
-Sender和Reciver状态图：
+##### Sender和Reciver状态图：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-066.png" alt="image 066" />
-### RDT3.0
+#### RDT3.0
 
 信道特性：存在丢包（数据包与确认信息均可能丢失）
 
@@ -1358,21 +1358,21 @@ Sender和Reciver状态图：
 
 “合理”时间：必须大于数据包来回一次的时间（RTT）
 
-Sender状态图：
+##### Sender状态图：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-067.png" alt="image 067" />
-几种情况梳理（跟着想一遍）：
+##### 几种情况梳理（跟着想一遍）：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-068.png" alt="image 068" />
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-069.png" alt="image 069" />
 性能：信道利用率较低
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-070.png" alt="image 070" />
-### GBN（Go Back N）
+#### GBN（Go Back N）
 
 Pipelining：信道利用率提高
 
-1.发送者视角：
+##### 1.发送者视角：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-071.png" alt="image 071" />
 维护窗口：未确认的包+可用未发送的包
@@ -1385,7 +1385,7 @@ Pipelining：信道利用率提高
 
 3.全部重传：定时器超时，窗口内所有包重传
 
-2.接收者视角：
+##### 2.接收者视角：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-072.png" alt="image 072" />
 维护窗口：最旧的未收到的包之后
@@ -1400,11 +1400,11 @@ Pipelining：信道利用率提高
 
 （跟着PPT例子想一遍）
 
-### Selective repeat
+#### Selective repeat
 
 Pipelining：信道利用率提高
 
-1.发送者视角
+##### 1.发送者视角
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-073.png" alt="image 073" />
 维护窗口：未确认的包+乱序确认的包+可用未发送的包
@@ -1417,7 +1417,7 @@ Pipelining：信道利用率提高
 
 3.单独重传：只对超时的包进行重传
 
-2.接收者视角
+##### 2.接收者视角
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-074.png" alt="image 074" />
 维护窗口：期望收到的包+乱序收到的包+可收缓冲区
@@ -1432,9 +1432,9 @@ Pipelining：信道利用率提高
 
 要求：接收者窗口大小必须小于序列号取值范围/2
 
-## 传输层协议（TCP：Transmission Control Protocl）
+### 传输层协议（TCP：Transmission Control Protocl）
 
-### 特点
+#### 特点
 
 1.可靠（有重传）、有序交付、流量控制、拥塞控制
 
@@ -1452,7 +1452,7 @@ Pipelining：信道利用率提高
 
 8.单独重传
 
-### 传输层segment格式（TCP）
+#### 传输层segment格式（TCP）
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-075.png" alt="image 075" />
 Sequence Number: 本段起始字节序号
@@ -1463,7 +1463,7 @@ Sequence Number: 本段起始字节序号
 传输例子：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-076.png" alt="image 076" />
-### 超时时间设置(Timeout)
+#### 超时时间设置(Timeout)
 
 基本准则：大于RTT（太短：不必要的重传；太长：对丢包响应太慢）
 
@@ -1487,7 +1487,7 @@ DevRTT = (1 - β) * DevRTT + β * |SampleRTT - EstimatedRTT|（指数加权平�
 
 ​​TimeoutInterval = EstimatedRTT + 4 * DevRTT​
 
-### 可靠数据传输（RDT）
+#### 可靠数据传输（RDT）
 
 Sender：
 
@@ -1544,7 +1544,7 @@ Reciver：
 
 发送重复ACK
 
-### 流量控制(flow control)
+#### 流量控制(flow control)
 
 概念：一种​​接收方主导的、端到端的速度匹配服务​​。
 
@@ -1557,17 +1557,17 @@ RcvBuffer：接收缓冲区的大小，通过套接字设定
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-078.png" alt="image 078" />
 实现机制：将已发送但未确认的数据量限制在接收到的 rwnd值之内
 
-### 连接管理(connection management)
+#### 连接管理(connection management)
 
-连接建立：
+##### 连接建立：
 
-1.握手的目的
+##### 1.握手的目的
 
 达成建立连接的共识​​：双方都明确知道对方愿意并且能够进行通信。
 
 确定连接参数​​：例如，交换彼此的​​初始序列号​​
 
-2.两次握手的问题（看ppt例子）
+##### 2.两次握手的问题（看ppt例子）
 
 消息会丢失​​：客户端的req_conn(x)可能丢失，导致客户端会​​重传​​一个新的请求 req_conn(x)
 
@@ -1575,10 +1575,10 @@ RcvBuffer：接收缓冲区的大小，通过套接字设定
 
 ​​消息会乱序​​：后发出的消息可能先到达。
 
-3.三次握手
+##### 3.三次握手
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-079.png" alt="image 079" />
-连接关闭（四次挥手）：
+##### 连接关闭（四次挥手）：
 
 1.客户端和服务器各自关闭自己的连接方向​
 
@@ -1589,9 +1589,9 @@ RcvBuffer：接收缓冲区的大小，通过套接字设定
 （服务器携带确认，可压缩成三次挥手）
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-080.png" alt="image 080" />
-## 拥塞控制原则 (Congestion Control)
+### 拥塞控制原则 (Congestion Control)
 
-### 拥塞控制 vs. 流量控制
+#### 拥塞控制 vs. 流量控制
 
 Congestion Control（强调整个网络）
 
@@ -1603,39 +1603,39 @@ Flow Control（强调单个接受方）
 
 一个发送方对一个接收方来说太快了，这是点对点的问题
 
-### 拥塞的原因与代价（迭代讲解）
+#### 拥塞的原因与代价（迭代讲解）
 
-1. 1个router，无限buffer，两个flow，无重传
+##### 1. 1个router，无限buffer，两个flow，无重传
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-081.png" alt="image 081" />
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-082.png" alt="image 082" />
 拥塞代价：急剧增长的网络延迟​​（可见最理想情况都是有代价的）
 
-2. 1个router，有限buffer，两个flow，可能重传
+##### 2. 1个router，有限buffer，两个flow，可能重传
 
 此时对于传输层来说，总输入速率还会包括重传的数据
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-083.png" alt="image 083" />
-假设1：发送方知道何时路由器存在缓存，只在此时发送数据包（没有重传）
+##### 假设1：发送方知道何时路由器存在缓存，只在此时发送数据包（没有重传）
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-084.png" alt="image 084" />
-假设2：发送发不知道何时存在缓存，但知道数据包是否丢包，只在丢包时重传
+##### 假设2：发送发不知道何时存在缓存，但知道数据包是否丢包，只在丢包时重传
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-085.png" alt="image 085" />
-现实：发送方什么都不知道，可能会因为数据包超时重传（即使没有丢包）
+##### 现实：发送方什么都不知道，可能会因为数据包超时重传（即使没有丢包）
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-086.png" alt="image 086" />
-拥塞代价：
+##### 拥塞代价：
 
 1.急剧增长的网络延迟
 
 2.更多的重传（必要-当丢包；不必要-没丢包只是在排队），浪费网络带宽，进而使得，有效数据吞吐量降低
 
-3. 多个router，有限buffer，多个flow，可能重传
+##### 3. 多个router，有限buffer，多个flow，可能重传
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-087.png" alt="image 087" />
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-088.png" alt="image 088" />
-拥塞代价：
+##### 拥塞代价：
 
 1.急剧增长的网络延迟
 
@@ -1643,7 +1643,7 @@ Flow Control（强调单个接受方）
 
 3.上游用于传输和缓冲丢包的容量都被浪费
 
-### 解决方案
+#### 解决方案
 
 解决方案核心问题：​​由谁来负责检测拥塞，并通知发送方减速
 
@@ -1659,9 +1659,9 @@ Flow Control（强调单个接受方）
 
 2.两种反馈内容：拥塞级别反馈/明确设置发送速率
 
-## TCP拥塞控制
+### TCP拥塞控制
 
-### 基于丢包的控制基本模型
+#### 基于丢包的控制基本模型
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-089.png" alt="image 089" />
 核心思想：通过一个名为cwnd来限制自己的发送速度，并根据网络情况跳转cwnd​
@@ -1672,7 +1672,7 @@ Flow Control（强调单个接受方）
 
 限制规则：​​发送方确保 LastByteSent - LastByteAcked<= cwnd
 
-### 具体cwnd调整策略AIMD
+#### 具体cwnd调整策略AIMD
 
 1.慢启动阶段
 
@@ -1695,7 +1695,7 @@ Flow Control（强调单个接受方）
 若收到3个重复ACK（快速重传）：ssthresh=当前cwnd/2，cwnd=ssthresh + 3 MSS，进入快速恢复阶段，当收到一个​​对新数据的ACK​​（表明重传成功，且新的数据也已被接收），则将 cwnd设为 ssthresh，并进入​​拥塞避免​​阶段
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-090.png" alt="image 090" />
-### 具体的cwnd调整策略——CUBIC
+#### 具体的cwnd调整策略——CUBIC
 
 Wmax​​：记录上次发生拥塞时的窗口大小
 
@@ -1714,7 +1714,7 @@ K是一个计算出来的时间点，表示函数曲线将在这个时间点增�
 
 ​​接近K时（窗口接近Wmax）​​：函数曲线平缓，窗口​​增长缓慢​​，谨慎突破
 
-### 瓶颈链路
+#### 瓶颈链路
 
 定义：在一条端到端的路径上，​​容量最小、最繁忙​​的那段链路就是瓶颈链路
 
@@ -1722,7 +1722,7 @@ K是一个计算出来的时间点，表示函数曲线将在这个时间点增�
 
 拥塞控制的目标：“保持端到端的管道刚好满，但不过满”​
 
-### 基于延时的控制——基本模型
+#### 基于延时的控制——基本模型
 
 基于丢包的控制的根本缺陷：​​丢包是拥塞的晚期信号​​。
 
@@ -1732,7 +1732,7 @@ RTT_min​​：测量到的最小RTT。这代表了网络在​​无拥塞、�
 
 RTT_measured​​：当前测量的RTT。如果它显著大于 RTT_min，多出来的部分就是​​排队延迟​​，这是拥塞的早期指示器。
 
-控制逻辑​​：
+##### 控制逻辑​​：
 
 ​​计算未拥塞吞吐量​​：cwnd / RTT_min
 
@@ -1744,13 +1744,13 @@ RTT_measured​​：当前测量的RTT。如果它显著大于 RTT_min，多出
 
 如果​​实际吞吐量远低于未拥塞吞吐量​​：说明存在显著的排队延迟（拥塞），需要​​线性减少 cwnd​​。
 
-优势：
+##### 优势：
 
 不引发/强制丢包​​：它在排队延迟刚开始增长时就主动减速，从而​​避免缓冲区溢出和丢包​​。
 
 ​​低延迟、高吞吐​​：目标是同时实现高吞吐量（满）和低延迟（但不过满）
 
-### ECN——网络显式反馈拥塞控制
+#### ECN——网络显式反馈拥塞控制
 
 1.能力协商​​：在TCP连接建立时，双方通过标志位告知对方自己支持ECN。
 
@@ -1760,7 +1760,7 @@ RTT_measured​​：当前测量的RTT。如果它显著大于 RTT_min，多出
 
 ​​4.发送方反应​​：发送方收到带有ECE标志的ACK后，就像检测到丢包一样，执行​​乘性减​​（将拥塞窗口减半），从而在丢包发生前就缓解拥塞
 
-### TCP公平
+#### TCP公平
 
 目标：如果有 K 个TCP会话共享同一条带宽为 R 的瓶颈链路，那么每个会话的平均速率应该是 R/K。
 
@@ -1773,7 +1773,7 @@ AIMD是公平的原理：
 收敛到公平​​：无论初始状态如何（比如连接1开始时速率很高，连接2很低），通过这种“同时线性增长，同时按比例减速”的机制，它们的速率轨迹会​​最终振荡在“公平分配线”（图中对角线）附近​​。
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-092.png" alt="image 092" />
-现实公平挑战：
+##### 现实公平挑战：
 
 1.不遵守规则的“异类”——UDP
 
@@ -1783,13 +1783,13 @@ AIMD是公平的原理：
 
 ​​即使都使用TCP，应用也可以通过“作弊”手段获得不公平的优势。一个应用（如网页浏览器）可以同时打开​​多个并行​​的TCP连接来传输数据（例如，同时下载一个页面中的多张图片）。从公平性模型来看，瓶颈链路会把​​每个TCP连接​​视为一个独立的会话。如果现有9个连接，新应用只开1个连接，它获得 R/10 的带宽。但如果新应用打开11个连接，它就在瓶颈链路上拥有了11个“参赛者”，理论上能获得接近 R/2 的总带宽。
 
-## 传输层功能的演化
+### 传输层功能的演化
 
-# 网络层：数据平面
+## 网络层：数据平面
 
-## 网络层概述
+### 网络层概述
 
-### 基本功能
+#### 基本功能
 
 将数据段从发送主机端到端地传输到接收主机。
 
@@ -1797,7 +1797,7 @@ AIMD是公平的原理：
 
 接收方：从链路层收到datagram后，解封装并将segments交付给传输层。
 
-### 存在位置/网络层的设备
+#### 存在位置/网络层的设备
 
 主机和路由器（网络层以上协议只存在于主机，交换机不存在于网络层）
 
@@ -1809,27 +1809,27 @@ AIMD是公平的原理：
 
 移动数据报：根据检查结果，将数据报从输入端口转移到合适的输出端口
 
-### 两大核心功能
+#### 两大核心功能
 
-1.转发（执行）
+##### 1.转发（执行）
 
 定义：根据转发表，将数据包从路由器的输入端口移动到合适的输出端口
 
 特点：本地的、瞬间完成的动作
 
-2.路由（决策）
+##### 2.路由（决策）
 
 定义：由路由算法，确定数据包从源到目的地所走的完整路径，得到转发表
 
 特点：全局的、需要计算的过程
 
-### 两大平面
+#### 两大平面
 
-1.数据平面 Data Plane
+##### 1.数据平面 Data Plane
 
 职责：本地、每路由器功能。当一个datagram到达路由器输入端口时，根据其头部信息，快速将其转发到正确的输出端口
 
-2.控制平面 Control Plane
+##### 2.控制平面 Control Plane
 
 职责：网络范围逻辑。决定数据报在从源到目的地的整个路径中，如何被路由
 
@@ -1839,7 +1839,7 @@ AIMD是公平的原理：
 
 SDN方法（集中式）：将控制逻辑从路由器中剥离出来，放在一个远程的、集中的服务器（控制器）上。控制器拥有全局网络视图，它负责计算路径，然后将转发表下发给所有路由器。
 
-### 网络层服务模型
+#### 网络层服务模型
 
 1.理想的服务模型要求
 
@@ -1847,7 +1847,7 @@ SDN方法（集中式）：将控制逻辑从路由器中剥离出来，放在�
 
 针对数据流Flow：按序交付、保证最小带宽、限制包间隔抖动（到达速度稳定）
 
-2.互联网采用的网络层服务模型：Best Effort
+##### 2.互联网采用的网络层服务模型：Best Effort
 
 含义：网络会“尽最大努力”去交付每一个数据报，但不做任何承诺和保证。
 
@@ -1859,7 +1859,7 @@ SDN方法（集中式）：将控制逻辑从路由器中剥离出来，放在�
 
 不保证为端到端的流提供任何带宽。
 
-3.Best Effort模型的优势
+##### 3.Best Effort模型的优势
 
 机制简单：路由器可以做得非常高效，成本低廉，使得互联网快速广泛地被部署
 
@@ -1869,9 +1869,9 @@ SDN方法（集中式）：将控制逻辑从路由器中剥离出来，放在�
 
 弹性服务的拥塞控制：像TCP这样的传输层协议，内置了拥塞控制机制。
 
-## 路由器Router
+### 路由器Router
 
-### 整体架构
+#### 整体架构
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-093.png" alt="image 093" />
 输入端口和输出端口（一个端口同时是两者）
@@ -1880,14 +1880,14 @@ SDN方法（集中式）：将控制逻辑从路由器中剥离出来，放在�
 
 路由处理器：控制平面的所在地。它运行操作系统、路由协议（如OSPF, BGP），并维护路由表，最终生成供数据平面使用的转发表
 
-### 输入端口
+#### 输入端口
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-094.png" alt="image 094" />
-1.物理层：线路终端
+##### 1.物理层：线路终端
 
 功能：比特级接收。负责在物理链路上接收光/电信号，并将其还原成数字比特流。
 
-2.链路层：链路层协议
+##### 2.链路层：链路层协议
 
 功能：处理数据帧，解封装，提取Diagram，交给网络层
 
@@ -1905,40 +1905,40 @@ SDN方法（集中式）：将控制逻辑从路由器中剥离出来，放在�
 
 线头排队问题：排队在队列最前端的数据包，由于它所要去的输出端口正被占用而无法前进，这会阻塞它后面所有数据包的传输，即使后面这些数据包要去往的输出端口是空闲的。
 
-Destination-based forwarding的核心算法：最长前缀匹配
+##### Destination-based forwarding的核心算法：最长前缀匹配
 
 当为给定的目的地址查找转发表项时，使用与目的地址匹配的最长地址前缀
 
-### 交换结构
+#### 交换结构
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-095.png" alt="image 095" />
-1.目标/任务
+##### 1.目标/任务
 
 将数据包从输入链路传输到合适的输出链路
 
-2.核心指标：交换速率
+##### 2.核心指标：交换速率
 
 定义：数据包从输入到输出的传输速率。
 
 理想目标：如果路由器有 N个输入/输出端口，每个端口的速率是 R，那么最理想的交换速率是 N x R。这意味着交换结构有能力同时处理所有端口以线速发送的数据，而不会成为瓶颈。
 
-3.三种交换结构
+##### 3.三种交换结构
 
-第一代：通过内存交换
+##### 第一代：通过内存交换
 
 原理：本质是传统计算机，系统总线连接着输入端口、CPU/内存和输出端口。Datagram从输入端口复制到内存，再从内存复制到输出端口。
 
 局限：速度受限于内存带宽和CPU处理能力，数据包需要两次穿越系统总线
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-096.png" alt="image 096" />
-第二代：通过总线交换
+##### 第二代：通过总线交换
 
 原理：引入一条共享总线。输入端口和输出端口直接连接到这条总线上。输入端口在本地做出转发决策，并为数据包打上标签（指定输出端口）数据包被直接放到共享总线上广播。所有输出端口都会“听到”这个数据包，但只有标签匹配的那个输出端口会接收它。
 
 局限：总线同一时间只能有一个数据包通过；交换速度受限于总线的带宽。
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-097.png" alt="image 097" />
-第三代：通过互连网络交换
+##### 第三代：通过互连网络交换
 
 核心原理：并行化。提供多条并发的、点对点的连接路径，允许多个数据包同时通过交换结构。
 
@@ -1953,11 +1953,11 @@ Destination-based forwarding的核心算法：最长前缀匹配
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-098.png" alt="image 098" />
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-099.png" alt="image 099" />
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-100.png" alt="image 100" />
-### 输出端口
+#### 输出端口
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-101.png" alt="image 101" />
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-102.png" alt="image 102" />
-数据包行为：
+##### 数据包行为：
 
 到达：从交换结构到达。
 
@@ -1967,7 +1967,7 @@ Destination-based forwarding的核心算法：最长前缀匹配
 
 排队问题：当数据包从交换结构到达输出端口的速率超过了输出链路的传输速率时，就会在输出端口缓存排队。
 
-缓冲区大小设定：
+##### 缓冲区大小设定：
 
 传统经验法则：RTT×链路容量C
 
@@ -1975,7 +1975,7 @@ Destination-based forwarding的核心算法：最长前缀匹配
 
 过大缓冲区的危害：排队延迟急剧增加，破坏实时应用；使TCP响应迟钝（基于延迟的拥塞控制算法依赖于延迟变化来探测拥塞）
 
-缓冲区管理策略：
+##### 缓冲区管理策略：
 
 1.丢弃：当缓冲区满时，丢弃数据包
 
@@ -1989,7 +1989,7 @@ Destination-based forwarding的核心算法：最长前缀匹配
 
 技术：ECN（显式拥塞通知）；RED
 
-分组调度策略：
+##### 分组调度策略：
 
 1.FCFS/FIFO
 
@@ -2012,15 +2012,15 @@ Destination-based forwarding的核心算法：最长前缀匹配
 是轮询调度的一般化形式，它根据预先分配的权重来按比例地分配链路带宽给不同的流量类别
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-105.png" alt="image 105" />
-### 网络中立性（暂略）
+#### 网络中立性（暂略）
 
-## 网络层数据平面协议：IP协议
+### 网络层数据平面协议：IP协议
 
-### 概述
+#### 概述
 
 IP协议：负责定义数据报格式、寻址方案和数据包处理规则。
 
-### Ipv4 Datagram格式
+#### Ipv4 Datagram格式
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-106.png" alt="image 106" />
 IP版本号：ipv4/ipv6
@@ -2045,28 +2045,28 @@ TTL：生存时间（没经过一个路由器，TTL-1）
 
 Options：可选项
 
-### IP地址
+#### IP地址
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-107.png" alt="image 107" />
-1.概述
+##### 1.概述
 
 32位，标识主机或路由器的每一个接口；
 
 表示方式：每8位之间用.隔开，十进制
 
-2.主机接口
+##### 2.主机接口
 
 主机通常有一到两个接口（例如，有线以太网网卡和无线网卡）
 
-3.路由器接口
+##### 3.路由器接口
 
 路由器可以有多个接口，每一个接口连接不同的主机或者其他路由器接口，，每个接口都有一个IP地址
 
-4.子网
+##### 4.子网
 
 定义：不需要跨过路由器联通在一起的设备接口（主机和路由器）组成的网络
 
-IP地址结构：
+##### IP地址结构：
 
 子网部分（高位比特）：标识一个特定的子网。同一个子网内的所有设备，IP地址的子网部分完全相同。
 
@@ -2074,7 +2074,7 @@ IP地址结构：
 
 子网掩码：明确指出了一个IP地址中，哪些位是子网部分，哪些位是主机部分。
 
-5. CIDR无类别域间路由（Classless InterDomain Routing）
+##### 5. CIDR无类别域间路由（Classless InterDomain Routing）
 
 地址格式：a.b.c.d/x
 
@@ -2082,22 +2082,22 @@ IP地址结构：
 
 PS：有类寻址缺陷：地址浪费极其严重；缺乏灵活性；无法根据实际需求灵活地划分网络规模。要么太大，要么太小。
 
-6.特殊IP地址
+##### 6.特殊IP地址
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-108.png" alt="image 108" />
-### 寻址
+#### 寻址
 
-1.新主机如何获得主机地址
+##### 1.新主机如何获得主机地址
 
-1.1硬编码在主机配置文件
+### 1.1硬编码在主机配置文件
 
-1.2 DHCP(Dynamic Host Configuration Protocol)
+### 1.2 DHCP(Dynamic Host Configuration Protocol)
 
 概述：主机在接入网络时，自动向网络中的DHCP服务器申请并获得：
 
 IP地址；子网掩码；第一跳路由器（默认网关）的地址；DNS服务器的地址
 
-特点：
+#### 特点：
 
 动态性：地址是从一个地址池中动态分配的。
 
@@ -2107,7 +2107,7 @@ IP地址；子网掩码；第一跳路由器（默认网关）的地址；DNS服
 
 支持移动性：非常适合笔记本电脑、手机等设备在不同网络间切换的场景。
 
-交互流程：
+##### 交互流程：
 
 1.DHCP discover（可选）
 
@@ -2130,7 +2130,7 @@ DHCP服务器收到Discover消息后，会从自己的地址池中选择一个�
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-109.png" alt="image 109" />
 本质：应用层协议，传输层使用UDP
 
-2.网络如何获得网络地址
+##### 2.网络如何获得网络地址
 
 源头：ICANN
 
@@ -2140,14 +2140,14 @@ DHCP服务器收到Discover消息后，会从自己的地址池中选择一个�
 
 组织通常是从上游ISP那里获得IP地址块。
 
-### NAT(Network Address Translation)
+#### NAT(Network Address Translation)
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-110.png" alt="image 110" />
-1.定义
+##### 1.定义
 
 NAT是一种允许一个整体网络使用一个公共IP地址接入互联网，而网络内部多台设备使用私有IP地址的技术。
 
-2.私有空间（仅在局域网内有效，不能在互联网上被路由）
+##### 2.私有空间（仅在局域网内有效，不能在互联网上被路由）
 
 10.0.0.0- 10.255.255.255(10/8)
 
@@ -2155,7 +2155,7 @@ NAT是一种允许一个整体网络使用一个公共IP地址接入互联网，
 
 192.168.0.0- 192.168.255.255(192.168/16)
 
-3.优势
+##### 3.优势
 
 节省公网IP
 
@@ -2165,7 +2165,7 @@ NAT是一种允许一个整体网络使用一个公共IP地址接入互联网，
 
 一定安全性：由于外部网络无法直接看到内部设备的私有IP
 
-4.工作流程（私有主机访问外部服务器）
+##### 4.工作流程（私有主机访问外部服务器）
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-111.png" alt="image 111" />
 第1步：内部主机发送请求
@@ -2186,9 +2186,9 @@ NAT是一种允许一个整体网络使用一个公共IP地址接入互联网，
 
 第4步：NAT路由器进行反向转换，路由器查看数据包的目标地址。然后查询NAT转换表，发现这条记录映射到内部地址，路由器执行反向操作：将数据包的目标地址改回，最后，将数据包转发到局域网内的主机 10.0.0.1。
 
-5.工作流程（外部访问私网服务器）
+##### 5.工作流程（外部访问私网服务器）
 
-### Ipv6产生原因/优点
+#### Ipv6产生原因/优点
 
 1.地址耗尽
 
@@ -2196,7 +2196,7 @@ NAT是一种允许一个整体网络使用一个公共IP地址接入互联网，
 
 3.支持“流”的概念：IPv6报头中引入了“流标签”字段，允许网络对属于同一个数据流（如音视频通话的数据包）的数据包进行统一处理。
 
-### Ipv6 Datagram
+#### Ipv6 Datagram
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-112.png" alt="image 112" />
 版本：为6。
@@ -2221,19 +2221,19 @@ priority：用于优先级处理。
 
 无选项字段
 
-### 从ipv4到ipv6——隧道
+#### 从ipv4到ipv6——隧道
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-113.png" alt="image 113" />
 核心思想：将一种协议的数据包作为另一种协议数据包的有效载荷进行封装和传输，即“包中包”。
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-114.png" alt="image 114" />
-## Generalized Forwarding & SDN（SDN通常和通用转发绑定）
+### Generalized Forwarding & SDN（SDN通常和通用转发绑定）
 
-1.流Flow
+#### 1.流Flow
 
 一个“流”是由数据包在链路层、网络层、传输层的报头字段值共同定义的一种数据类型。例如，特定的源IP、目的IP、协议类型、端口号的组合被视为一个流。
 
-2.流表（转发表的广义版本）
+#### 2.流表（转发表的广义版本）
 
 流表是存储在支持SDN的网络设备（如OpenFlow交换机）中的一张规则表。它定义了该设备的行为。
 
@@ -2243,7 +2243,7 @@ priority：用于优先级处理。
 
 动作（Action）：常见动作包括，转发、丢弃、修改、发给控制器等
 
-3.OpenFlow（具体实现）
+#### 3.OpenFlow（具体实现）
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-115.png" alt="image 115" />
 路由器（Router）： 匹配 = 最长目的IP前缀，动作 = 从一、条链路转发。
@@ -2254,15 +2254,15 @@ priority：用于优先级处理。
 
 NAT： 匹配 = IP地址和端口，动作 = 重写地址和端口。
 
-## 中间盒Middleboxes
+### 中间盒Middleboxes
 
 定义：在源主机和目标主机之间的数据路径上，执行除IP路由器正常标准功能之外的任何中介设备。
 
 包括：NAT、防火墙、负载均衡设备、CDN缓存服务器等
 
-# 网络层：控制平面
+## 网络层：控制平面
 
-## 概述
+### 概述
 
 控制层的主要功能：路由
 
@@ -2272,7 +2272,7 @@ NAT： 匹配 = IP地址和端口，动作 = 重写地址和端口。
 
 2.SDN路由（由控制器实现路由算法）
 
-## 路由模型（都属于传统路由）
+### 路由模型（都属于传统路由）
 
 目标：决定从源主机到目的主机的“好”路径（快、不拥挤、跳数少）
 
@@ -2281,13 +2281,13 @@ NAT： 匹配 = IP地址和端口，动作 = 重写地址和端口。
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-116.png" alt="image 116" />
 路由协议分类：
 
-1.从路由结果变化速度看
+#### 1.从路由结果变化速度看
 
 Static：路由结果变化较慢（如管理员硬编码在路由器）
 
 Dynamic：路由结果随实际网络情况变化快
 
-2.从每个路由器获取的信息看
+#### 2.从每个路由器获取的信息看
 
 Global：每个路由器开始有全局所有路由器的链路cost（link status协议）
 
@@ -2295,9 +2295,9 @@ Decentralized：每个路由器最开始只有到邻居路由器的cost（distan
 
 （注意：每个路由器只有直连链路的cost可以直接测量获取）
 
-### Link Status链路状态
+#### Link Status链路状态
 
-特点：
+##### 特点：
 
 1.路由器开始知道所有cost（通过链路状态广播获取）
 
@@ -2305,7 +2305,7 @@ Decentralized：每个路由器最开始只有到邻居路由器的cost（distan
 
 3.经过k次迭代，可至少获得到k个节点的最小cost路径
 
-符号：
+##### 符号：
 
 Cx,y：x到y的直连cost，不相连是为正无穷
 
@@ -2315,7 +2315,7 @@ P(v)：v节点的前驱节点
 
 N’：已计算出最小cost路径的节点集合
 
-算法Dijkstra：
+##### 算法Dijkstra：
 
 1.初始化
 
@@ -2326,7 +2326,7 @@ N’：已计算出最小cost路径的节点集合
 3.更新
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-117.png" alt="image 117" />
-算法结果：
+##### 算法结果：
 
 1.最小cost路径树
 
@@ -2334,7 +2334,7 @@ N’：已计算出最小cost路径的节点集合
 2.路由表
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-119.png" alt="image 119" />
-算法性能：
+##### 算法性能：
 
 1.收敛速度：算法复杂度O(n^2)
 
@@ -2342,21 +2342,21 @@ N’：已计算出最小cost路径的节点集合
 
 3.鲁棒性：较高，错误节点只影响局部
 
-算法局限：
+##### 算法局限：
 
 当cost为拥塞程度时，容易震荡（例如，以拥塞程度作为cost时，一条链路拥塞程度小，路由都走这条路，结果过一会，这条路拥塞程度就变高了，就又去另一条链路，如此震荡循环）
 
-### Distance Vector距离矢量
+#### Distance Vector距离矢量
 
-距离矢量：
+##### 距离矢量：
 
 源路由器x到其他所有路由器的估计cost（即不同y的D(y)组成的矢量）
 
-BellmanFord方程：
+##### BellmanFord方程：
 
 Dx(y) = minv { Cx,v + Dv(y) }
 
-特点：
+##### 特点：
 
 1.路由器只知道到邻居的直连cost
 
@@ -2366,7 +2366,7 @@ Dx(y) = minv { Cx,v + Dv(y) }
 
 4.距离矢量最终会收敛为最小Cost
 
-算法：
+##### 算法：
 
 1.各节点初始化自己的距离矢量（∞/直连cost），像邻居发送
 
@@ -2378,7 +2378,7 @@ Dx(y) = minv { Cx,v + Dv(y) }
 
 4.发送距离矢量给邻居
 
-算法性能：
+##### 算法性能：
 
 1.收敛速度：收敛时间变化不定（存在路由环路和无穷计数问题）
 
@@ -2386,13 +2386,13 @@ Dx(y) = minv { Cx,v + Dv(y) }
 
 3.鲁棒性：较低，单节点错误容易影响全局
 
-算法局限：
+##### 算法局限：
 
 好消息传得快，坏消息传得慢，无限计数问题
 
-## 传统路由（实际）
+### 传统路由（实际）
 
-### 概述
+#### 概述
 
 AS: autonomous system/domain 自治域
 
@@ -2406,7 +2406,7 @@ Intra-AS协议：RIP、EIGRP、OSPF
 
 Inter-AS协议：BGP
 
-### 对比：Intra Routing(OSPF) vs.Inter Routing(BGP)
+#### 对比：Intra Routing(OSPF) vs.Inter Routing(BGP)
 
 1.路由策略
 
@@ -2428,7 +2428,7 @@ BGP基于TCP传输
 
 （虽然OSPF和BGP是属于网络层的路由协议，但这里类似于应用层）
 
-## intra-AS protocol:OSPF(open shortest path first)
+### intra-AS protocol:OSPF(open shortest path first)
 
 1.开源
 
@@ -2441,11 +2441,11 @@ BGP基于TCP传输
 分为local area和backbone区域；四类路由器
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-120.png" alt="image 120" />
-## Inter-AS protocol:BGP(Border Gateway Protocol)
+### Inter-AS protocol:BGP(Border Gateway Protocol)
 
-### 概述
+#### 概述
 
-特点：
+##### 特点：
 
 1.基于“路径矢量”（距离矢量升级，防止回环）
 
@@ -2453,18 +2453,18 @@ BGP基于TCP传输
 
 3.基于TCP
 
-组成部分：
+##### 组成部分：
 
 1.eBGP：从邻居获取到网络的访问信息；将访问信息通告给其他邻居
 
 2.iBGP：网关路由器将外部网络的访问信息通告给AS内部的路由器
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-121.png" alt="image 121" />
-### 连接方式
+#### 连接方式
 
 BGP路由器（称为对等体）之间通过半永久的TCP连接进行通信
 
-### 通告内容
+#### 通告内容
 
 Prefix+Attributes
 
@@ -2476,7 +2476,7 @@ AS-PATH：到达目的网络的路径
 
 NEXT-HOP：下一跳（这里的跳指AS而非路由器）IP地址
 
-### 路由策略
+#### 路由策略
 
 1.基于policy
 
@@ -2484,7 +2484,7 @@ NEXT-HOP：下一跳（这里的跳指AS而非路由器）IP地址
 
 3.烫土豆路由（最近的NEXT-HOP）：最快将路由器送出本AS
 
-### BGP Message
+#### BGP Message
 
 OPEN: opens TCP connection to remote BGP peer and authenticates sending BGP peer
 
@@ -2494,9 +2494,9 @@ KEEPALIVE: keeps connection alive in absence of UPDATES; also ACKs OPEN request
 
 NOTIFICATION: reports errors in previous msg; also used to close connection
 
-## SDN路由（集中式软件定义路由）
+### SDN路由（集中式软件定义路由）
 
-### 优点：对比传统路由
+#### 优点：对比传统路由
 
 1.更简单的网络管理：统一集中管理
 
@@ -2505,10 +2505,10 @@ NOTIFICATION: reports errors in previous msg; also used to close connection
 3.开放
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-122.png" alt="image 122" />
-### SDN三层架构
+#### SDN三层架构
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-123.png" alt="image 123" />
-1.Data Plane
+##### 1.Data Plane
 
 高速硬件实现：专注于转发，性能极高。
 
@@ -2516,7 +2516,7 @@ NOTIFICATION: reports errors in previous msg; also used to close connection
 
 开放接口：通过南向API（如OpenFlow）接收控制器的指令。
 
-2.Controller（Control Plane）（职责）
+##### 2.Controller（Control Plane）（职责）
 
 维护网络状态：收集全网的拓扑、链路状态等信息，形成全局网络视图。
 
@@ -2526,7 +2526,7 @@ NOTIFICATION: reports errors in previous msg; also used to close connection
 
 高可用性设计：通常以分布式系统方式实现，确保性能、可扩展性和容错能力。
 
-3.控制应用（Control Plane）（利用Controller提供的视图实现功能）
+##### 3.控制应用（Control Plane）（利用Controller提供的视图实现功能）
 
 路由：计算最优路径
 
@@ -2534,39 +2534,39 @@ NOTIFICATION: reports errors in previous msg; also used to close connection
 
 访问控制：实现企业级的防火墙和安全策略。
 
-# 链路层
+## 链路层
 
-## 概述
+### 概述
 
-### 链路层的功能
+#### 链路层的功能
 
-1.成帧与链路接入
+##### 1.成帧与链路接入
 
 成帧：将网络层下发的数据报加上帧头和帧尾，封装成帧（帧头包含MAC地址）
 
 链路接入：当链路是共享介质时，链路层协议需要规定节点如何访问信道，即“媒体访问控制”（MAC），以避免冲突。
 
-2.可靠数据传输
+##### 2.可靠数据传输
 
 在误码率较高的无线链路上则更有价值
 
-3.流量控制
+##### 3.流量控制
 
 协调相邻发送节点和接收节点之间的速率，防止发送过快导致接收方缓冲区溢出
 
-4.差错检测
+##### 4.差错检测
 
-5.差错纠正
+##### 5.差错纠正
 
 接收方不仅能发现错误，还能纠正一定数量的比特错误，而无需重传
 
-6.半双工与全双工
+##### 6.半双工与全双工
 
 全双工：​链路两端的节点可以同时向对方发送数据（如现代以太网）。
 
 半双工：​节点可以发送和接收，但不能同时进行（如早期的集线器网络）。
 
-### 链路层的实现位置
+#### 链路层的实现位置
 
 1.主机：网络接口卡（NIC）
 
@@ -2574,9 +2574,9 @@ NOTIFICATION: reports errors in previous msg; also used to close connection
 
 3.交换机
 
-### 通信过程
+#### 通信过程
 
-发送方（假设为主机）：
+##### 发送方（假设为主机）：
 
 1.网络层的数据报下发给链路层。
 
@@ -2586,7 +2586,7 @@ NOTIFICATION: reports errors in previous msg; also used to close connection
 
 物理链路：​ 帧作为比特流在物理链路上传输。
 
-接收方（假设为主机）：
+##### 接收方（假设为主机）：
 
 1.物理层接收到信号，转换回比特流，上交链路层。
 
@@ -2595,9 +2595,9 @@ NOTIFICATION: reports errors in previous msg; also used to close connection
 3.如果一切正常，则从帧中解封装出数据报，将其向上传递给网络层。
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-124.png" alt="image 124" />
-## 错误检测与纠正
+### 错误检测与纠正
 
-发送端：
+#### 发送端：
 
 D（数据）：需要被保护的原始数据，长度为 d比特。这里的数据（Data）通常包括来自上层的整个数据报，也可能包含链路层帧头的一部分。
 
@@ -2605,7 +2605,7 @@ EDC（差错检测与纠正位）： 根据特定算法（如奇偶校验、CRC�
 
 核心思想： EDC是D的“指纹”或“摘要”。如果 D在传输中改变，其“指纹” EDC也会不匹配。
 
-接收端：
+##### 接收端：
 
 接收到的数据变为D’和EDC’
 
@@ -2618,13 +2618,13 @@ EDC（差错检测与纠正位）： 根据特定算法（如奇偶校验、CRC�
 如果不相等：则肯定检测到了错误，通常会丢弃这个帧。
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-125.png" alt="image 125" />
-局限性：
+##### 局限性：
 
 差错检测并非100%可靠；EDC字段越长（冗余信息越多），检错能力就越强，但传输效率也越低。
 
-### 具体方式1：奇偶校验
+#### 具体方式1：奇偶校验
 
-单比特奇偶校验
+##### 单比特奇偶校验
 
 原理： 在 d比特的数据后附加一个奇偶校验位，使得整个d+1比特的序列中“1”的个数为偶数（偶校验）或奇数（奇校验）。
 
@@ -2634,7 +2634,7 @@ EDC（差错检测与纠正位）： 根据特定算法（如奇偶校验、CRC�
 
 能力与局限：只能检测出奇数个比特错误。如果发生两个比特的错误，“1”的个数的奇偶性不变，无法检测。
 
-二维奇偶校验
+##### 二维奇偶校验
 
 将数据排列成矩阵（行和列）
 
@@ -2647,13 +2647,13 @@ EDC（差错检测与纠正位）： 根据特定算法（如奇偶校验、CRC�
 原理： 如果只有一个比特出错，那么该比特所在的行和列的奇偶校验都会出错。接收方通过定位行校验出错且列校验也出错的交叉点，就能精确找到错误比特的位置，然后直接将其取反（0变1，1变0）即可纠正，无需重传。
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-126.png" alt="image 126" />
-### 具体方式2：CheckSum
+#### 具体方式2：CheckSum
 
 详见第三章
 
-### 具体方式3：CRC（Cyclic Redundancy Check）/循环冗余校验
+#### 具体方式3：CRC（Cyclic Redundancy Check）/循环冗余校验
 
-最终发送结构：
+##### 最终发送结构：
 
 D：要发送的原始数据位，可以看作一个很长的二进制数。
 
@@ -2662,7 +2662,7 @@ R：计算得到的 r位CRC校验码（或称“余数”）
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-127.png" alt="image 127" />
 G：生成器，长度为 r+1 位。r就是我们最终要生成的CRC校验码的长度。
 
-发送方：
+##### 发送方：
 
 1.将数据 D逻辑上向左移动 r位（等价于D * 2^r）
 
@@ -2670,24 +2670,24 @@ G：生成器，长度为 r+1 位。r就是我们最终要生成的CRC校验码�
 
 3.发送<D, R>
 
-接受方：
+##### 接受方：
 
 1.收到帧后，用G去除它
 
 2.如果余数为0：则认为传输无错误；如果余数不为0：检测到错误
 
-具体计算方法（举例）：
+##### 具体计算方法（举例）：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-128.png" alt="image 128" />
-优点：
+##### 优点：
 
 可以检测所有长度小于 r+1位的突发错误（1~r）
 
 在精心选择 G的前提下，能检测到超过99.99%的更长位错误。
 
-## 多址接入协议（Mutiple Access Protocol）
+### 多址接入协议（Mutiple Access Protocol）
 
-### 链路类型
+#### 链路类型
 
 （这里的双方，指的是链路层层面的，即具有MAC地址）
 
@@ -2701,11 +2701,11 @@ G：生成器，长度为 r+1 位。r就是我们最终要生成的CRC校验码�
 
 无线网络：WiFi 卫星通信等
 
-### 多址接入协议（广播链路的模型）
+#### 多址接入协议（广播链路的模型）
 
 目的：解决广播链路的冲突问题
 
-特点：
+##### 特点：
 
 1.分布式算法：所有节点平等独立的运行相同的规则
 
@@ -2729,26 +2729,26 @@ G：生成器，长度为 r+1 位。r就是我们最终要生成的CRC校验码�
 
 3.轮流（与时分不同，更智能）
 
-### 信道划分：TDMA（Time Division Multiple Access）
+#### 信道划分：TDMA（Time Division Multiple Access）
 
 每轮被划分为若干个固定大小的时隙，时隙理想长度为帧传输时间。
 
 局限：存在闲置的时隙（本轮某节点没有要发的数据）
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-129.png" alt="image 129" />
-### 信道划分：FDMA（Frequency Division Multiple Access）
+#### 信道划分：FDMA（Frequency Division Multiple Access）
 
 网络中的每个节点被预先、固定地分配其中一个子频带。这个频带归该节点独占。
 
 局限：存在闲置的频带
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-130.png" alt="image 130" />
-### 随机访问：纯Aloha
+#### 随机访问：纯Aloha
 
 特点：不需要时间同步，帧一到就发，最大效率18%
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-131.png" alt="image 131" />
-### 随机访问：Slotted Aloha
+#### 随机访问：Slotted Aloha
 
 特点：将时间划分为等长的时隙，一个时隙刚好传输一帧。节点只能在时隙的起点开始发送。
 
@@ -2761,7 +2761,7 @@ G：生成器，长度为 r+1 位。r就是我们最终要生成的CRC校验码�
 缺点：存在冲突，浪费时隙，存在空闲时隙，需要时间同步
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-132.png" alt="image 132" />
-### 随机访问：CSMA
+#### 随机访问：CSMA
 
 特点：“先听后发”（只在需要发送时探测通道是否占用）
 
@@ -2772,7 +2772,7 @@ G：生成器，长度为 r+1 位。r就是我们最终要生成的CRC校验码�
 仍然存在冲突：帧传输需要时间，冲突仍不可避免
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-133.png" alt="image 133" />
-### 随机访问：CSMA/CD
+#### 随机访问：CSMA/CD
 
 特点：“先听后发”，“边听边发”（持续探测通道是否可用）
 
@@ -2786,11 +2786,11 @@ G：生成器，长度为 r+1 位。r就是我们最终要生成的CRC校验码�
 二进制指数避让（检测到冲突后的恢复）：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-135.png" alt="image 135" />
-### 轮流
+#### 轮流
 
 特点：结合前两者优点（低载时单节点使用所有带宽，高载时每个节点有固定份额无冲突）
 
-实现1-轮询（集中式）
+##### 实现1-轮询（集中式）
 
 核心机制：存在一个集中式控制器。按顺序轮询从设备。被轮询到的设备获得发送权。
 
@@ -2807,7 +2807,7 @@ G：生成器，长度为 r+1 位。r就是我们最终要生成的CRC校验码�
 典型应用：蓝牙
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-136.png" alt="image 136" />
-实现2-令牌传递（分布式）
+##### 实现2-令牌传递（分布式）
 
 核心机制：在网络中循环传递一个特殊的控制帧——令牌。只有持有令牌的节点才有权发送数据。发送完毕后，将令牌传递给逻辑上的下一个节点。
 
@@ -2824,9 +2824,9 @@ G：生成器，长度为 r+1 位。r就是我们最终要生成的CRC校验码�
 典型应用：令牌环网、FDDI
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-137.png" alt="image 137" />
-### 实例（暂略）
+#### 实例（暂略）
 
-## MAC地址
+### MAC地址
 
 是什么：48位的物理地址，通常以十六进制表示
 
@@ -2834,7 +2834,7 @@ G：生成器，长度为 r+1 位。r就是我们最终要生成的CRC校验码�
 
 特点：扁平的，没有层次结构；唯一性，可移植性
 
-## ARP协议（同一局域网，已知IP找MAC）（链路层上，但非网络层）
+### ARP协议（同一局域网，已知IP找MAC）（链路层上，但非网络层）
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-138.png" alt="image 138" />
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-139.png" alt="image 139" />
@@ -2852,9 +2852,9 @@ A构造一个ARP请求帧：
 
 A收到B的应答后，将IP-> MAC这个映射关系，添加到自己的ARP表中，并重置TTL。A的ARP表里有了B的记录，后续发给B的数据就可以直接封装，无需再次广播询问。
 
-## 链路层协议：Ethernet
+### 链路层协议：Ethernet
 
-### 帧结构
+#### 帧结构
 
 Ps：链路层的帧结构根据链路层协议的不同而不同
 
@@ -2875,7 +2875,7 @@ Ps：链路层的帧结构根据链路层协议的不同而不同
 
 5.循环冗余校验
 
-### 特点
+#### 特点
 
 1.不可靠：交给上层实现
 
@@ -2883,7 +2883,7 @@ Ps：链路层的帧结构根据链路层协议的不同而不同
 
 3.多路接入协议MAC：CSMA/CD（早期共享的ethernet）
 
-### 交换机
+#### 交换机
 
 本质：链路层设备
 
@@ -2899,7 +2899,7 @@ Ps：链路层的帧结构根据链路层协议的不同而不同
 
 全双工无冲突（相较于集线器）
 
-自学习过程：
+##### 自学习过程：
 
 情况A：已知单播（已知目标，且目标与源不在同一端口）
 
@@ -2919,7 +2919,7 @@ Ps：链路层的帧结构根据链路层协议的不同而不同
 
 动作：泛洪。广播帧必须送达所有主机。
 
-## VLAN
+### VLAN
 
 概述：将一个局域网LAN划分为多个虚拟局域网VLAN
 
@@ -2929,14 +2929,14 @@ Ps：链路层的帧结构根据链路层协议的不同而不同
 
 需要跨越交换机时：需要主干链路连接
 
-## 数据中心
+### 数据中心
 
 结构：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-141.png" alt="image 141" />
 特点：交换机之间富有冗余连接（目的：增加吞吐，提升带宽；可靠性）
 
-## A Day In Life：Web访问综合大题
+### A Day In Life：Web访问综合大题
 
 每一个访问都说明好封装和解封装
 
@@ -2950,11 +2950,11 @@ Ps：链路层的帧结构根据链路层协议的不同而不同
 
 4. Tcp关闭
 
-# 无线网络和移动网络
+## 无线网络和移动网络
 
-## 概述
+### 概述
 
-### 无线网络包含的基本部分
+#### 无线网络包含的基本部分
 
 1.无线主机：如手机、笔记本等终端设备
 
@@ -2962,7 +2962,7 @@ Ps：链路层的帧结构根据链路层协议的不同而不同
 
 3.基站：连接无线主机和有线网络（这里不光指移动网络基站）
 
-### 无线链路
+#### 无线链路
 
 作用：
 
@@ -2976,29 +2976,29 @@ Ps：链路层的帧结构根据链路层协议的不同而不同
 
 2.技术实现多样：WiFi（短距高速）、4G/5G蜂窝网络（广域移动）、蓝牙（短距低耗）
 
-### 两种组网方式
+#### 两种组网方式
 
-1.基础架构模式
+##### 1.基础架构模式
 
 所有终端通过基站接入有线互联网核心
 
 切换Handoff：设备因为移动，从一个基站切换到另一个基站。
 
-2.自组织架构模式
+##### 2.自组织架构模式
 
 没有基站，设备节点在彼此无线链路的直接覆盖范围内进行通信。
 
-## 无线网络
+### 无线网络
 
-### 无线链路特点
+#### 无线链路特点
 
-1.衰减
+##### 1.衰减
 
 路径损耗：信号强度会随着传播距离的增加而减弱
 
 公式：自由空间路径损耗 与 (频率 × 距离)² 成正比。
 
-2.多径传播
+##### 2.多径传播
 
 信号会经建筑物、地面等物体反射，产生多个不同路径的副本，以微小时间差到达接收端。
 
@@ -3008,7 +3008,7 @@ Ps：链路层的帧结构根据链路层协议的不同而不同
 
 约束：为了保证一个比特能在信道变化前被正确接收，发送每个比特的时间不能超过相干时间。这从根本上限制了最大传输速率。
 
-3.噪声
+##### 3.噪声
 
 无线环境充满各种电磁噪声和其他信号干扰。
 
@@ -3019,15 +3019,15 @@ Ps：链路层的帧结构根据链路层协议的不同而不同
 频率越高（速率越快），对噪声就越敏感，越容易产生误码率。
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-142.png" alt="image 142" />
-4.隐藏终端
+##### 4.隐藏终端
 
 节点A和C都能与节点B通信，但彼此由于距离过远或障碍物阻挡，无法侦听到对方的存在。A和C都认为信道空闲，可能同时向B发送数据，导致信号在B处碰撞，通信失败。（这个问题在有线网络（CSMA/CD）中通过“侦听”即可避免，但在无线网络中却普遍存在）
 
-### 一种多址接入协议：CDMA
+#### 一种多址接入协议：CDMA
 
 允许所有用户同时、同频通信”的多址接入技术，核心是用“码”来区分用户
 
-核心要素：
+##### 核心要素：
 
 数据：要发送的原始比特，图中用d_i表示（+1代表比特1，-1代表比特0）
 
@@ -3035,16 +3035,16 @@ Ps：链路层的帧结构根据链路层协议的不同而不同
 
 不同的码序列之间应当满足正交性。
 
-Encode/Decode：
+##### Encode/Decode：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-143.png" alt="image 143" />
 Decode时根据要接受的用户，采用不同的码序列，可以完美忽略掉其他用户干扰。
 
-### 802.11WiFi无线网络协议（链路层协议）
+#### 802.11WiFi无线网络协议（链路层协议）
 
 统一基础：都使用CSMA/CA进行多路访问，并支持基础架构和自组织两种模式。
 
-基本网络架构（基础架构模式下）：
+##### 基本网络架构（基础架构模式下）：
 
 基本服务集BSS包括：
 
@@ -3052,11 +3052,11 @@ Decode时根据要接受的用户，采用不同的码序列，可以完美忽�
 
 2.接入点AP/基站
 
-信道划分：
+##### 信道划分：
 
 将可用频段（如2.4GHz）划分为多个有少量重叠的子频段，每个子频段就是一个信道。2.4GHz频段的信道1、6、11为全球通用标准，互不重叠。
 
-关联过程（无线主机加入WiFi）：
+##### 关联过程（无线主机加入WiFi）：
 
 1.扫描：主机在多个信道上监听（即可能看到多个WiFi）
 
@@ -3068,17 +3068,17 @@ Decode时根据要接受的用户，采用不同的码序列，可以完美忽�
 
 5.DHCP：获取IP地址，从而接入网络。
 
-主机发现AP的两种方式（即上面的1.扫描过程）：
+##### 主机发现AP的两种方式（即上面的1.扫描过程）：
 
 被动扫描：主机在多个信道上监听AP周期性广播的信标帧。慢，省电。
 
 主动扫描：主机主动在每个信道上广播探测请求帧，收到此帧的AP会回复探测响应帧。快，耗电。
 
-使用的多址接入协议：CSMA/CA（不是CD）
+##### 使用的多址接入协议：CSMA/CA（不是CD）
 
-流程（没有RTS/CTS）：
+##### 流程（没有RTS/CTS）：
 
-发送方：
+##### 发送方：
 
 如果侦听到信道空闲持续一个DIFS时间，则立即发送整个数据帧（无碰撞检测）。
 
@@ -3088,7 +3088,7 @@ Decode时根据要接受的用户，采用不同的码序列，可以完美忽�
 
 如果帧接收正确，等待一个很短的SIFS间隔后，立即回复ACK确认帧。ACK是必需的，因为发送方无法检测碰撞，ACK是其判断传输成功的唯一依据。
 
-流程（有RTS/CTS，为了解决隐藏终端问题）
+##### 流程（有RTS/CTS，为了解决隐藏终端问题）
 
 发送方在竞争到信道后，不直接发送大数据帧，而是先发送一个很短的RTS帧（请求发送），其中包含本次通信需要占用的时长。
 
@@ -3098,7 +3098,7 @@ Decode时根据要接受的用户，采用不同的码序列，可以完美忽�
 
 优势：RTS和CTS帧都很短，即使发生碰撞，代价也远小于长数据帧的碰撞。这极大地减少了因隐藏终端导致的数据帧碰撞概率。
 
-帧结构：
+##### 帧结构：
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-144.png" alt="image 144" />
 地址1（接收地址）：下一跳接收此帧的设备的MAC地址。它可能是最终目的地，也可能是负责转发的AP。
@@ -3113,7 +3113,7 @@ Decode时根据要接受的用户，采用不同的码序列，可以完美忽�
 注意上图中的无线接入点，它不是路由器，是链路层设备（与交换机同级别），到路由器R1，才是一跳。（但家用路由器通常整合在一起了）
 
 <img src="../../blog-assets/2026-08-08-computer-network-notes/image-146.png" alt="image 146" />
-速率匹配：
+##### 速率匹配：
 
 问题：无线信道质量（SNR）动态变化。远离AP或遇到障碍时，SNR下降，误码率上升。固定高速率会导致通信失败；固定低速率则浪费带宽。
 
@@ -3131,7 +3131,7 @@ Decode时根据要接受的用户，采用不同的码序列，可以完美忽�
 
 目的：在变化的信道条件下，始终提供当前环境下可能达到的最高可靠速率。
 
-电源管理：
+##### 电源管理：
 
 核心思想：让无线网卡在空闲时休眠，定期唤醒以检查是否有数据。
 
@@ -3149,7 +3149,7 @@ AP缓冲：AP得知后，会为这个节点临时缓冲所有发往它的数据�
 
 如果列表中无自己的ID，则立即再次进入睡眠，直到下一个信标周期。
 
-考试信息：
+##### 考试信息：
 
 只到802
 
@@ -3165,4 +3165,4 @@ AP缓冲：AP得知后，会为这个节点临时缓冲所有发往它的数据�
 
 综合分析15
 
-第四章IP的补充内容
+## 第四章IP的补充内容
